@@ -1,2 +1,2 @@
-# xjy-img-process
-新教育图像识别项目
+# xjy-algo
+Verison 1.0

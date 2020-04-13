@@ -1,0 +1,80 @@
+{
+  "rawFileNames": [
+      "E77673B9X114178_08202019_185257_0000.jpg",
+      "E77673B9X114178_08202019_185257_0001.jpg"
+  ],
+
+  "templateId": "030120190301010802",
+
+  "scannerCode": "E77673B9X114128",
+
+  "pageId": "AB",
+
+  "files": [
+    "http://img.xinjiaoyu.com/app/output/E77673B9X114178_08202019_185257_0000/page.jpg",
+    "http://img.xinjiaoyu.com/app/output/E77673B9X114178_08202019_185257_0001/page.jpg"
+  ],
+
+  "errmsg": "识别错误原因说明",
+  "exam": "如果是考试，考试ID",
+
+  "studentName": {
+    "path": "http://img.xinjiaoyu.com/app/output/E77673B9X114178_08202019_185257_0001/name.jpg",
+    "text": "",
+    "confidence": "0"
+  },
+
+  "studentCode": {
+    "path": "http://img.xinjiaoyu.com/app/output/E77673B9X114178_08202019_185257_0001/id.jpg",
+    "text": "手写识别结果：90101",
+    "confidence": "0.9085135590734292"
+  },
+
+  "studentCode2": {
+    "path": "",
+    "text": "填涂学号识别结果：90101",
+    "confidence": ""
+  },
+
+  "Choice": [
+    {
+      "TopicNumber": "1",
+      "score": null,
+      "Mark": "D",
+      "SingleMark": "填涂识别最深的选项"
+    },
+    {
+      "TopicNumber": "2",
+      "score": null,
+      "Mark": "C",
+      "SingleMark": "填涂识别最深的选项"
+    },
+    {
+      "TopicNumber": "3",
+      "score": null,
+      "Mark": "A",
+      "SingleMark": "填涂识别最深的选项"
+    },
+    {
+      "TopicNumber": "4",
+      "score": null,
+      "Mark": "ABCD",
+      "SingleMark": "填涂识别最深的选项"
+    }
+  ],
+  "MultiChoice": [],
+  "WriteQuestion": [
+    {
+      "TopicNumber": "16",
+      "score": -1,
+      "scorearea": "http://img.xinjiaoyu.com/app/output/BRN3C2AF49D92BD_20160220_034620_009909/write/1/score.jpg",
+      "Items": [
+        {
+          "Note": "只有一块",
+          "ItemID": "1",
+          "path": "http://img.xinjiaoyu.com/app/output/XH5495VA1178_20200112_062106_00022/write/2/1.jpg"
+        }
+      ]
+    }
+  ]
+}
