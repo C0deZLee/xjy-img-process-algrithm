@@ -1,2 +1,2 @@
-# xjy-algo
-Verison 1.0
+# score_system
+Score test for middle school children

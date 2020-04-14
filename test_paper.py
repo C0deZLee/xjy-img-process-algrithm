@@ -31,12 +31,10 @@ class testPaper:
         roiMean = roi.sum() / (width * height * 3)
         return roiMean
 
-    def identifyCode(self, template):
+    def identifyCode(self, template, model):
         self.result["studentCode"] = {}
         idString = ""
         HandID = template["pages"][0]["HandID"]
-        model = mnistModel()
-        # model.train("model.pkl")
         for i in range(len(HandID)):
             digitID = "digit" + str(i)
             roi = HandID[digitID]
@@ -48,7 +46,7 @@ class testPaper:
                 x += self.x0
                 y += self.y0
             img = self.pagesImage[0][y:y+h, x:x+w]
-            digit = str(model.predict(img, "model.pkl"))
+            digit = str(model.predict(img))
             idString += digit
         self.result["studentCode"]["text"] = ("填涂学号识别结果：" + idString)
 
@@ -118,9 +116,9 @@ class testPaper:
                     continue
                 self.result["WriteQuestion"].append(self.scoreSingleWriteQuestion(template, i, j))
 
-    def score(self, template):
+    def score(self, template, model):
         self.getTemplateId(template)
-        self.identifyCode(template)
+        self.identifyCode(template, model)
         self.identifyCode2(template)
         self.scoreChoices(template)
         self.scoreWriteQuestions(template)
