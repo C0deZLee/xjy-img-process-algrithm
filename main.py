@@ -6,7 +6,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--isCrop', default=False, help="Whether the test paper is cropped.")
-parser.add_argument('--model', type=str, default="model.pkl", help="the file to save and load model.")
+parser.add_argument('--model', type=str, default="model.ckpt", help="the file to save and load model.")
 parser.add_argument('--train', default=False, help="Whether to train the model first or directly predict.")
 args = parser.parse_args()
 
