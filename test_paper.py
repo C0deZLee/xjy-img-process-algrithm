@@ -112,7 +112,7 @@ class testPaper:
         for i in range(pagesNum):
             writesNum = len(template["pages"][i]["WriteQuestions"])
             for j in range(writesNum):
-                if (template["pages"][i]["WriteQuestions"][j].has_key("tenscores")):
+                if ("tenscores" in template["pages"][i]["WriteQuestions"][j]):
                     continue
                 self.result["WriteQuestion"].append(self.scoreSingleWriteQuestion(template, i, j))
 
