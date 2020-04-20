@@ -4,12 +4,13 @@ from test_paper import *
 import json
 
 class scoreSystem:
-    def __init__(self, template, bucket, outBucket, isCrop, filename, train, save_dir, id_dir):
+    def __init__(self, template, bucket, outBucket, isCrop, filename, train, save_dir, id_dir, datadir, warm_start):
         self.papers = []
         self.isCrop = isCrop
-        self.template = template
+        with open(template) as f:
+            self.template = json.load(f)
         self.outBucket = outBucket
-        self.model = mnistModel(filename)
+        self.model = mnistModel(filename, datadir, warm_start)
         self.train = train
         self.save_dir = save_dir
         self.id_dir = id_dir
@@ -40,13 +41,14 @@ class scoreSystem:
     
     def score(self):
         idx = 0
-        if (self.train):
+        if self.train:
+            self.model.getdata()
             self.model.train()
         for paper in self.papers:
             if (not(self.isCrop)):
                 paper.crop(self.save_dir)
-            paper.cropHandwrittenQuestion(self.template, self.save_dir)
-            paper.score(self.template, self.model, self.id_dir)
+            paper.cropHandwrittenQuestion(self.save_dir)
+            paper.score(self.model, self.id_dir)
             dir = os.path.join(self.outBucket, "student" + str(idx) + ".json")
             if (not(os.path.exists(self.outBucket))):
                 os.mkdir(self.outBucket)
