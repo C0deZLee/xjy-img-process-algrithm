@@ -12,7 +12,7 @@ parser.add_argument('--template', default="Template.json", help="The file of the
 parser.add_argument('--output_dir', default="Score Output", help="The dir to save output result.json")
 parser.add_argument('--save_dir', default="Cleaned image", help="The directory for the cropped paper")
 parser.add_argument('--id_dir', default="Handwritten ID output")
-parser.add_argument('--dir', default="Json Template with scanned pictures", help="The dir of the students' answers")
+parser.add_argument('--dir', default="Json Template with scanned pictures", help="The dir of the student's answers")
 parser.add_argument('--datadir', default="Student handwrite", help="The dir of the training data")
 parser.add_argument('--warm_start', default=False, help="Continue training model")
 args = parser.parse_args()
