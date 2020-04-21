@@ -189,10 +189,20 @@ class testPaper:
         writeRes["score"] = 0
         maxAverage = 0
         for roi in write["scores"]:
-            roiMean = self.getAverageIntensityValue(pageIdx, roi["x"], roi["y"], roi["width"], roi["height"], True)
+            roiMean = self.getAverageIntensityValue(pageIdx, int(roi["x"]), int(roi["y"]), int(roi["width"]), int(roi["height"]), True)
             if (roiMean > maxAverage):
                 maxAverage = roiMean
                 writeRes["score"] = roi["Score"]
+        if ("tenscores" in write):
+            tenscore = 0
+            maxAverage = 0
+            for roi in write["tenscores"]:
+                roiMean = self.getAverageIntensityValue(pageIdx, int(roi["x"]), int(roi["y"]), int(roi["width"]), int(roi["height"]), True)
+                if (roiMean > maxAverage):
+                    maxAverage = roiMean
+                    if (maxAverage > 2):
+                        tenscore = roi["Score"]
+            writeRes["score"] += tenscore
         return writeRes
     
     def scoreWriteQuestions(self):
@@ -201,8 +211,6 @@ class testPaper:
         for i in range(pagesNum):
             writesNum = len(self.template["pages"][i]["WriteQuestions"])
             for j in range(writesNum):
-                if self.template["pages"][i]["WriteQuestions"][j]["options"][0]["height"] > 200:
-                    continue
                 self.result["WriteQuestion"].append(self.scoreSingleWriteQuestion(i, j))
 
     def score(self, model, id_dir):
