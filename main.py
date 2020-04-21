@@ -18,7 +18,14 @@ parser.add_argument('--warm_start', default=False, help="Continue training model
 args = parser.parse_args()
 
 def main():
-    system = scoreSystem(args.template, args.dir, args.output_dir, args.isCrop, args.model, args.train, args.save_dir, args.id_dir, args.datadir, args.warm_start) 
+    with open(args.template) as f:
+        template = json.load(f)
+
+    system = scoreSystem(template, args.dir, args.output_dir, args.cropped, args.model,
+                         args.save_dir, args.id_dir, args.datadir, args.warm_start)
+    if args.train:
+        system.trainModel()
+
     system.score()
 
 if __name__ == '__main__':

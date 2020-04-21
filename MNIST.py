@@ -1,9 +1,15 @@
+import os
+
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 import tensorflow as tf
-from tensorflow.examples.tutorials.mnist import input_data
-import os
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
+
+# import tensorflow_datasets as tfds
+
+# from tensorflow.examples.tutorials.mnist import input_data
 
 def shuffle_in_unison(a, b):
     assert a.shape[0] == b.shape[0]

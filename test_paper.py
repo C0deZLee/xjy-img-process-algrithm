@@ -4,9 +4,9 @@ from MNIST import *
 import os
 
 class testPaper:
-    def __init__(self, rawFileList, bucket, isCrop, id, template):
+    def __init__(self, rawFileList, isCrop, id, template):
         self.result = {}
-        self.pagesImage = [cv2.imread(os.path.join(bucket, x)) for x in rawFileList]
+        self.pagesImage = [cv2.imread(x) for x in rawFileList]
         self.rawFileList = rawFileList
         self.x0 = 147
         self.y0 = 136
