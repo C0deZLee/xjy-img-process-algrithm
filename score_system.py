@@ -1,18 +1,19 @@
 # -*- coding: UTF-8 -*-
 
-from test_paper import *
+from test _paper import *
 import json
 
 class scoreSystem:
     def __init__(self, template, bucket, outBucket, isCrop, filename, train, save_dir, id_dir):
-        self.papers = []
-        self.isCrop = isCrop
+        self.papers = [] 
+        self.isCrop = isCrop 
         self.template = template
         self.outBucket = outBucket
         self.model = mnistModel(filename)
         self.train = train
         self.save_dir = save_dir
         self.id_dir = id_dir
+
         pageNums = len(self.template["pages"])
         filelist = []
         for files in os.walk(bucket):
@@ -42,6 +43,7 @@ class scoreSystem:
         idx = 0
         if (self.train):
             self.model.train()
+        
         for paper in self.papers:
             if (not(self.isCrop)):
                 paper.crop(self.save_dir)
