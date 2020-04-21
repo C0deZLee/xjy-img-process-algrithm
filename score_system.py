@@ -21,11 +21,12 @@ class scoreSystem:
         self.cropped = cropped # If img is cropped
         self.template = template  # 识别模版JSON
 
-        self.raw_img_dir = raw_img_dir            # 原始文件地址
+        self.raw_img_dir = raw_img_dir # 原始文件地址
 
         self.model = mnistModel(model_file, data_dir, warm_start)  # 识别模型
 
         self.bulk_load = bulk_load  # 是否一次性载入多张答题卡
+
 
         page_nums = len(self.template["pages"]) # 有几页
 
@@ -66,41 +67,24 @@ class scoreSystem:
         self.model.train()
 
     def score(self):
-<<<<<<< HEAD
         """判分"""
+        cropped_sheets_dir = os.path.join(self.raw_img_dir, "cropped_sheets")
+        hand_written_student_code_dir = os.path.join(self.raw_img_dir, "hand_written_student_code")
+        cropped_write_questions_dir = os.path.join(self.raw_img_dir, "cropped_write_questions")
+        result_json_dir = os.path.join(self.raw_img_dir, "result_json")
+
         if self.bulk_load:  # 读取文件夹下全部的学生原始答题卡
 
             for idx, paper in enumerate(self.papers):
+
                 # 如果不是裁剪过的图片, 则裁剪图片
                 if not self.cropped:
-                    cropped_list = paper.crop(os.path.join(self.raw_img_dir, "cropped_sheets"))
+                    cropped_list = paper.crop(cropped_sheets_dir)
 
-                # 裁剪手写图片
-                hand_written_list = paper.cropHandwrittenQuestion()
-
-                paper.score(self.model, os.path.join(self.raw_img_dir, "hand_written_student_code"))
+                paper.score(self.model, hand_written_student_code_dir, cropped_write_questions_dir)
                 
                 # 创建文件路径
-                filedir = os.path.join(self.raw_img_dir, "result_json")
-=======
-        idx = 0
-        if self.train:
-            self.model.getdata()
-            self.model.train()
-        
-        for paper in self.papers:
-            if (not(self.isCrop)):
-                paper.crop(self.save_dir)
-            paper.score(self.model, self.id_dir, self.save_dir)
-            dir = os.path.join(self.outBucket, "student" + str(idx) + ".json")
-            if (not(os.path.exists(self.outBucket))):
-                os.mkdir(self.outBucket)
-            with open(dir, 'w') as f:
-                f.write(json.dumps(paper.result))
-            idx += 1
-            print("Score finished: " + str(idx) + "/" + str(len(self.papers)))
-            
->>>>>>> 2f4dc69da29a3fadce0828aebc47211a3af2353c
+                filedir = result_json_dir
 
                 if (not(os.path.exists(filedir))):
                     os.mkdir(filedir)
