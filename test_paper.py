@@ -31,6 +31,7 @@ class testPaper:
             #TODO: 如果遇到扭曲的图片需要额外处理
             img = self.pagesImage[i][self.y0:self.y1, self.x0:self.x1]
 
+
             # 将裁切后的答题卡存储下来
             filename = self.rawFileNameList[i].replace('.jpg', '') + '_cropped_' + str(i) + ".jpg"
             filepath = os.path.join(filedir, filename)
@@ -38,6 +39,7 @@ class testPaper:
             croppedSheetList.append(filepath)
 
         return croppedSheetList
+        
     def cropHandwrittenQuestion(self):
         """裁剪手写题并返回手写题的本地路径"""
         filedir = os.path.join(self.rawFileDir, "cropped_write_questions")
@@ -72,7 +74,6 @@ class testPaper:
                     idx += 1
         
         return croppedWriteQuestionsList
-
 
     def getTemplateId(self):
         self.result["templateId"] = self.template["templateId"]
@@ -190,7 +191,7 @@ class testPaper:
             roiMean = self.getAverageIntensityValue(pageIdx, roi["x"], roi["y"], roi["width"], roi["height"], False)
             if (roiMean < minAverage):
                 minAverage = roiMean
-                if (minAverage > 200):
+                if (minAverage > 240):
                     continue
                 choiceRes["Score"] = roi["Answer"]
                 choiceRes["SingleMark"] = roi["Mark"]
@@ -206,35 +207,70 @@ class testPaper:
             for j in range(choicesNum):
                 self.result["Choice"].append(self.scoreSingleChoice(i, j))
     
-    def scoreSingleWriteQuestion(self, pageIdx, writeIdx):
+    def scoreSingleWriteQuestion(self, pageIdx, writeIdx, save_dir):
         writeRes = {}
         write = self.template["pages"][pageIdx]["WriteQuestions"][writeIdx]
         writeRes["TopicNumber"] = write["SN"]
         writeRes["score"] = 0
         maxAverage = 0
         for roi in write["scores"]:
-            roiMean = self.getAverageIntensityValue(pageIdx, roi["x"], roi["y"], roi["width"], roi["height"], True)
+            roiMean = self.getAverageIntensityValue(pageIdx, int(roi["x"]), int(roi["y"]), int(roi["width"]), int(roi["height"]), True)
             if (roiMean > maxAverage):
                 maxAverage = roiMean
                 writeRes["score"] = roi["Score"]
+        if ("tenscores" in write):
+            tenscore = 0
+            maxAverage = 0
+            for roi in write["tenscores"]:
+                roiMean = self.getAverageIntensityValue(pageIdx, int(roi["x"]), int(roi["y"]), int(roi["width"]), int(roi["height"]), True)
+                if (roiMean > maxAverage):
+                    maxAverage = roiMean
+                    if (maxAverage > 2):
+                        tenscore = roi["Score"]
+            writeRes["score"] += tenscore
+        x = write["options"][0]["x"]
+        y = write["options"][0]["y"]
+        w = write["options"][0]["width"]
+        h = write["options"][0]["height"]
+        if (not(self.isCrop)):
+            x += self.x0
+            y += self.y0
+        img = self.pagesImage[pageIdx][y:y+h, x:x+w]
+        if (write["options"][0]["JoinUp"] == 2):
+            write2 = self.template["pages"][pageIdx + 1]["WriteQuestions"][0]
+            x2 = write2["options"][0]["x"]
+            y2 = write2["options"][0]["y"]
+            w2 = write2["options"][0]["width"]
+            h2 = write2["options"][0]["height"]
+            if (not(self.isCrop)):
+                x2 += self.x0
+                y2 += self.y0
+            img2 = self.pagesImage[pageIdx + 1][y2:y2+h2, x2:x2+w2]
+            img = np.concatenate((img, img2))
+        if (not(os.path.exists(save_dir))):
+            os.mkdir(save_dir)
+        filename = "writequestion_" + str(write["SN"]) + ".jpg"
+        filedir = os.path.join(save_dir, "student" + str(self.id))
+        if (not(os.path.exists(filedir))):
+            os.mkdir(filedir)
+        cv2.imwrite(os.path.join(filedir, filename), img)
+        writeRes["Items"] = [{"Note": "Only one block", "ItemID": 1, "path": os.path.join(filedir, filename)}]
         return writeRes
     
-    def scoreWriteQuestions(self):
+    def scoreWriteQuestions(self, save_dir):
         pagesNum = len(self.template["pages"])
         self.result["WriteQuestion"] = []
         for i in range(pagesNum):
             writesNum = len(self.template["pages"][i]["WriteQuestions"])
             for j in range(writesNum):
-                if self.template["pages"][i]["WriteQuestions"][j]["options"][0]["height"] > 200:
-                    continue
-                self.result["WriteQuestion"].append(self.scoreSingleWriteQuestion(i, j))
+                self.result["WriteQuestion"].append(self.scoreSingleWriteQuestion(i, j, save_dir))
 
-    def score(self, model, id_dir):
+    def score(self, model, id_dir, save_dir):
         self.getTemplateId()
         self.identifyCode(model, id_dir)
         self.identifyCode2()
         self.scoreChoices()
-        self.scoreWriteQuestions()
+        self.scoreWriteQuestions(save_dir)
 
 
 

@@ -66,6 +66,7 @@ class scoreSystem:
         self.model.train()
 
     def score(self):
+<<<<<<< HEAD
         """判分"""
         if self.bulk_load:  # 读取文件夹下全部的学生原始答题卡
 
@@ -81,6 +82,25 @@ class scoreSystem:
                 
                 # 创建文件路径
                 filedir = os.path.join(self.raw_img_dir, "result_json")
+=======
+        idx = 0
+        if self.train:
+            self.model.getdata()
+            self.model.train()
+        
+        for paper in self.papers:
+            if (not(self.isCrop)):
+                paper.crop(self.save_dir)
+            paper.score(self.model, self.id_dir, self.save_dir)
+            dir = os.path.join(self.outBucket, "student" + str(idx) + ".json")
+            if (not(os.path.exists(self.outBucket))):
+                os.mkdir(self.outBucket)
+            with open(dir, 'w') as f:
+                f.write(json.dumps(paper.result))
+            idx += 1
+            print("Score finished: " + str(idx) + "/" + str(len(self.papers)))
+            
+>>>>>>> 2f4dc69da29a3fadce0828aebc47211a3af2353c
 
                 if (not(os.path.exists(filedir))):
                     os.mkdir(filedir)
