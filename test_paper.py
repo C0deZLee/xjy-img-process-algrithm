@@ -4,10 +4,11 @@ from MNIST import *
 import os
 
 class testPaper:
-    def __init__(self, rawFileList, isCrop, id, template):
+    def __init__(self, rawFileNameList, rawFileDir, isCrop, id, template):
         self.result = {}
-        self.pagesImage = [cv2.imread(x) for x in rawFileList]
-        self.rawFileList = rawFileList
+        self.pagesImage = [cv2.imread(os.path.join(rawFileDir, fileName)) for fileName in rawFileNameList]
+        self.rawFileDir = rawFileDir
+        self.rawFileNameList = rawFileNameList
         self.x0 = 147
         self.y0 = 136
         self.x1 = self.x0 + template["pages"][0]["Marker"]["x"] + template["pages"][0]["Marker"]["width"]
@@ -17,23 +18,39 @@ class testPaper:
         self.id = id
 
     def crop(self, save_dir):
-        filedir = os.path.join(save_dir, "student" + str(self.id))
-        if (not(os.path.exists(save_dir))):
-            os.mkdir(save_dir)
-        if (not(os.path.exists(filedir))):
-            os.mkdir(filedir) 
-        for i in range(len(self.pagesImage)):
-            img = self.pagesImage[i][self.y0:self.y1, self.x0:self.x1]
-            filename = "page" + str(i) + ".jpg"
-            cv2.imwrite(os.path.join(filedir, filename), img)
+        """裁剪答题卡并返回本地路径"""
+        filedir = os.path.join(self.rawFileDir, "cropped_sheets")
 
-    def cropHandwrittenQuestion(self, save_dir):
-        idx = 0
-        filedir = os.path.join(save_dir, "student" + str(self.id))
-        if (not(os.path.exists(save_dir))):
-            os.mkdir(save_dir)
+        # 创建文件路径
         if (not(os.path.exists(filedir))):
-            os.mkdir(filedir) 
+            os.mkdir(filedir)
+
+        croppedSheetList = []
+
+        for i in range(len(self.pagesImage)):
+            #TODO: 如果遇到扭曲的图片需要额外处理
+            img = self.pagesImage[i][self.y0:self.y1, self.x0:self.x1]
+
+            # 将裁切后的答题卡存储下来
+            filename = self.rawFileNameList[i].replace('.jpg', '') + '_cropped_' + str(i) + ".jpg"
+            filepath = os.path.join(filedir, filename)
+            cv2.imwrite(filepath, img)
+            croppedSheetList.append(filepath)
+
+        return croppedSheetList
+    def cropHandwrittenQuestion(self):
+        """裁剪手写题并返回手写题的本地路径"""
+        filedir = os.path.join(self.rawFileDir, "cropped_write_questions")
+    
+        # 创建文件路径
+        if (not(os.path.exists(filedir))):
+            os.mkdir(filedir)
+        
+        # 返回的文件名列表
+        croppedWriteQuestionsList = []
+        
+        # 遍历答题卡中的手写题
+        idx = 0
         for i in range(len(self.pagesImage)):
             for ques in self.template["pages"][i]["WriteQuestions"]:
                 if ques["options"][0]["height"] > 200:
@@ -45,9 +62,16 @@ class testPaper:
                         x += self.x0
                         y += self.y0
                     img = self.pagesImage[i][y:y+h, x:x+w]
-                    filename = "writequestion" + str(idx) + ".jpg"
-                    cv2.imwrite(os.path.join(filedir, filename), img)
+                    filename = self.rawFileNameList[i].replace('.jpg', '') + '_write_question_' + str(idx) + ".jpg"
+                    
+                    # 将裁切后的答题卡存储下来
+                    filepath = os.path.join(filedir, filename)
+                    cv2.imwrite(filepath, img)
+                    croppedWriteQuestionsList.append(filepath)
+                    
                     idx += 1
+        
+        return croppedWriteQuestionsList
 
 
     def getTemplateId(self):
