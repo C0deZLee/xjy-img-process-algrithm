@@ -13,6 +13,7 @@ class testPaper:
         self.x1 = self.x0 + template["pages"][0]["Marker"]["x"] + template["pages"][0]["Marker"]["width"]
         self.y1 = self.y0 + template["pages"][0]["Marker"]["y"] + template["pages"][0]["Marker"]["height"]
         self.isCrop = isCrop
+        self.template = template
         self.id = id
 
     def crop(self, save_dir):
@@ -26,7 +27,7 @@ class testPaper:
             filename = "page" + str(i) + ".jpg"
             cv2.imwrite(os.path.join(filedir, filename), img)
 
-    def cropHandwrittenQuestion(self, template, save_dir):
+    def cropHandwrittenQuestion(self, save_dir):
         idx = 0
         filedir = os.path.join(save_dir, "student" + str(self.id))
         if (not(os.path.exists(save_dir))):
@@ -34,7 +35,7 @@ class testPaper:
         if (not(os.path.exists(filedir))):
             os.mkdir(filedir) 
         for i in range(len(self.pagesImage)):
-            for ques in template["pages"][i]["WriteQuestions"]:
+            for ques in self.template["pages"][i]["WriteQuestions"]:
                 if ques["options"][0]["height"] > 200:
                     x = ques["options"][0]["x"]
                     y = ques["options"][0]["y"]
@@ -49,8 +50,8 @@ class testPaper:
                     idx += 1
 
 
-    def getTemplateId(self, template):
-        self.result["templateId"] = template["templateId"]
+    def getTemplateId(self):
+        self.result["templateId"] = self.template["templateId"]
 
     def getSingleRedMask(self, img):
         lower_red = np.array([156, 43, 46])
@@ -70,7 +71,7 @@ class testPaper:
         roiMean = roi.sum() / (width * height * 3)
         return roiMean
 
-    def identifyCode(self, template, model, id_dir):
+    def identifyCode(self, model, id_dir):
         filedir = os.path.join(id_dir, "student" + str(self.id))
         if (not(os.path.exists(id_dir))):
             os.mkdir(id_dir)
@@ -78,10 +79,10 @@ class testPaper:
             os.mkdir(filedir) 
         self.result["studentCode"] = {}
         idString = ""
-        x = template["pages"][0]["ID"]["x"]
-        y = template["pages"][0]["ID"]["y"]
-        w = template["pages"][0]["ID"]["width"]
-        h = template["pages"][0]["ID"]["height"]
+        x = self.template["pages"][0]["ID"]["x"]
+        y = self.template["pages"][0]["ID"]["y"]
+        w = self.template["pages"][0]["ID"]["width"]
+        h = self.template["pages"][0]["ID"]["height"]
         if (not(self.isCrop)):
             x += self.x0
             y += self.y0
@@ -107,23 +108,37 @@ class testPaper:
             if (self.pagesImage[0].item(int(yc), x+w-i, 1) < 252):
                 xe = x + w - i
                 break    
-        num = len(template["pages"][0]["ID"]) - 5 
+        num = len(self.template["pages"][0]["ID"]) - 5 
         w = (xe - xs) / num
-        h = ye - ys      
+        h = ye - ys    
+        conf = ""
         for i in range(num):
+            if i != 0:
+                conf += ", "
             x = xs + i * w
             y = ys
-            img = self.pagesImage[0][int(y)+7:int(y+h)-7, int(x)+5:int(x+w)-5]
+            img = 255 - self.pagesImage[0][int(y)+10:int(y+h)-10, int(x)+5:int(x+w)-5]
             filename = "digit" + str(i) + ".jpg"
-            cv2.imwrite(os.path.join(filedir, filename), img)
-            digit = str(model.predict(img))
-            idString += digit
+            img2 = np.where(normalize(img) > 0.3, 1, 0)
+            img2 = np.concatenate((img2, img2, img2), 2)
+            kernel = np.ones((3, 3), np.uint8)
+            img2 = cv2.morphologyEx(np.uint8(img2), cv2.MORPH_CLOSE, kernel)
+            kernel = np.ones((4, 4), np.uint8)
+            img2 = cv2.morphologyEx(np.uint8(img2), cv2.MORPH_OPEN, kernel)
+            kernel = np.ones((2, 2), np.uint8)
+            img2 = cv2.erode(np.uint8(img2), kernel)
+            cv2.blur(img2, (5, 5))
+            cv2.imwrite(os.path.join(filedir, filename), img2 * 255)
+            prob, digit = model.predict(img)
+            idString += str(digit)
+            conf += str(prob)
         self.result["studentCode"]["text"] = ("handwritten ID identified: " + idString)
+        self.result["studentCode"]["confidence"] = conf
 
-    def identifyCode2(self, template):
+    def identifyCode2(self):
         self.result["studentCode2"] = {}
         idString = ""
-        ID = template["pages"][0]["ID"]
+        ID = self.template["pages"][0]["ID"]
         for i in range(len(ID) - 5):
             minAverage = 255
             digitId = "digit" + str(i)
@@ -139,9 +154,9 @@ class testPaper:
             idString += digit
         self.result["studentCode2"]["text"] = ("filled ID identified: " + idString)
 
-    def scoreSingleChoice(self, template, pageIdx, choiceIdx):
+    def scoreSingleChoice(self, pageIdx, choiceIdx):
         choiceRes = {}
-        choice = template["pages"][pageIdx]["Choice"][choiceIdx]
+        choice = self.template["pages"][pageIdx]["Choice"][choiceIdx]
         choiceRes["TopicNumber"] = choice["SN"]
         choiceRes["Score"] = 0
         choiceRes["Mark"] = ""
@@ -159,17 +174,17 @@ class testPaper:
                 choiceRes["Mark"] = roi["Mark"]
         return choiceRes
 
-    def scoreChoices(self, template):
-        pagesNum = len(template["pages"])
+    def scoreChoices(self):
+        pagesNum = len(self.template["pages"])
         self.result["Choice"] = []
         for i in range(pagesNum):
-            choicesNum = len(template["pages"][i]["Choice"])
+            choicesNum = len(self.template["pages"][i]["Choice"])
             for j in range(choicesNum):
-                self.result["Choice"].append(self.scoreSingleChoice(template, i, j))
+                self.result["Choice"].append(self.scoreSingleChoice(i, j))
     
-    def scoreSingleWriteQuestion(self, template, pageIdx, writeIdx):
+    def scoreSingleWriteQuestion(self, pageIdx, writeIdx):
         writeRes = {}
-        write = template["pages"][pageIdx]["WriteQuestions"][writeIdx]
+        write = self.template["pages"][pageIdx]["WriteQuestions"][writeIdx]
         writeRes["TopicNumber"] = write["SN"]
         writeRes["score"] = 0
         maxAverage = 0
@@ -180,22 +195,22 @@ class testPaper:
                 writeRes["score"] = roi["Score"]
         return writeRes
     
-    def scoreWriteQuestions(self, template):
-        pagesNum = len(template["pages"])
+    def scoreWriteQuestions(self):
+        pagesNum = len(self.template["pages"])
         self.result["WriteQuestion"] = []
         for i in range(pagesNum):
-            writesNum = len(template["pages"][i]["WriteQuestions"])
+            writesNum = len(self.template["pages"][i]["WriteQuestions"])
             for j in range(writesNum):
-                if template["pages"][i]["WriteQuestions"][j]["options"][0]["height"] > 200:
+                if self.template["pages"][i]["WriteQuestions"][j]["options"][0]["height"] > 200:
                     continue
-                self.result["WriteQuestion"].append(self.scoreSingleWriteQuestion(template, i, j))
+                self.result["WriteQuestion"].append(self.scoreSingleWriteQuestion(i, j))
 
-    def score(self, template, model, id_dir):
-        self.getTemplateId(template)
-        self.identifyCode(template, model, id_dir)
-        self.identifyCode2(template)
-        self.scoreChoices(template)
-        self.scoreWriteQuestions(template)
+    def score(self, model, id_dir):
+        self.getTemplateId()
+        self.identifyCode(model, id_dir)
+        self.identifyCode2()
+        self.scoreChoices()
+        self.scoreWriteQuestions()
 
 
 

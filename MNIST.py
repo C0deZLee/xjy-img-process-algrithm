@@ -5,11 +5,33 @@ import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 import os
 
+def shuffle_in_unison(a, b):
+    assert a.shape[0] == b.shape[0]
+    shuffled_a = np.empty(a.shape, dtype=a.dtype)
+    shuffled_b = np.empty(b.shape, dtype=b.dtype)
+    permutation = np.random.permutation(a.shape[0])
+    for old_index, new_index in enumerate(permutation):
+        shuffled_a[new_index] = a[old_index]
+        shuffled_b[new_index] = b[old_index]
+    return shuffled_a, shuffled_b
+
+def normalize(img):
+    img = img[:, :, 0:1]
+    minv = np.min(img)
+    maxv = np.max(img)
+    img = img * (img - minv) / (maxv - minv)
+    return img
+
 class mnistModel:
-    def __init__(self, filename):
+    def __init__(self, filename, datadir, warm_start):
         self.filename = filename
-        self.mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
-        self.x = tf.placeholder(tf.float32, [None, 784])
+        self.warm_start = warm_start
+        self.X_train = np.zeros((1, 28, 28, 1))
+        self.y_train = np.zeros((1, 10))
+        self.X_test = 0
+        self.y_test = 0
+        self.datadir = datadir
+        self.x = tf.placeholder(tf.float32, [None, 28, 28, 1])
         self.y_ = tf.placeholder(tf.float32, [None, 10])
         # self.W = tf.Variable(tf.zeros([784, 10]))
         # self.b = tf.Variable(tf.zeros([10]))
@@ -34,8 +56,7 @@ class mnistModel:
         self.W_conv1 = weight_variable([5, 5, 1, 32])
         self.b_conv1 = bias_variable([32])
 
-        self.x_image = tf.reshape(self.x, [-1,28,28,1])
-        self.h_conv1 = tf.nn.relu(conv2d(self.x_image, self.W_conv1) + self.b_conv1)
+        self.h_conv1 = tf.nn.relu(conv2d(self.x, self.W_conv1) + self.b_conv1)
         self.h_pool1 = max_pool_2x2(self.h_conv1)
 
 
@@ -67,35 +88,91 @@ class mnistModel:
         self.init_op = tf.global_variables_initializer()
         self.saver = tf.train.Saver()
 
+    def getdata(self):
+        for i in range(10):
+            filedir = os.path.join(self.datadir, str(i))
+            print(filedir)
+            for files in os.walk(filedir):
+                X_train = np.zeros((min(10000, len(files[2])), 28, 28, 1))
+                y_train = np.zeros((min(10000, len(files[2])), 10))
+                for j in range(min(10000, len(files[2]))):
+                    if (j % 1000 == 0):
+                        print("finish loading: " + str(j) + "/" + str(min(10000, len(files[2]))))
+                    img = cv2.imread(os.path.join(filedir, files[2][j]))
+                    if img is None:
+                        print(files[2][j])
+                        continue
+                    img2 = normalize(cv2.resize(img, (28, 28), interpolation = cv2.INTER_AREA))
+                    X_train[j] = np.where(img2 > 0.3, 1, 0)
+                    y_train[j][i] = 1 
+                if (i == 0):
+                    self.X_train = X_train
+                    self.y_train = y_train
+                else:                  
+                    self.X_train = np.concatenate((self.X_train, X_train))
+                    self.y_train = np.concatenate((self.y_train, y_train))
+            print(self.X_train.shape)
+        self.X_train, self.y_train = shuffle_in_unison(self.X_train, self.y_train)
+        self.X_test = self.X_train[95000:]
+        self.y_test = self.y_train[95000:]
+        self.X_train = self.X_train[:95000]
+        self.y_train = self.y_train[:95000]
+
+
     def train(self):
         with tf.Session() as sess:
             sess.run(self.init_op)
-            for i in range(20000):
-                batch_xs, batch_ys = self.mnist.train.next_batch(50)
+            if (self.warm_start and os.path.exists(self.filename + ".meta")):
+                print("Model restored from " + self.filename)
+                self.saver.restore(sess, self.filename)
+            idx = 0
+            best_loss = 10000
+            for i in range(7500):
+                batch_xs, batch_ys = self.X_train[idx:min(idx+500, self.X_train.shape[0])], self.y_train[idx:min(idx+500, self.X_train.shape[0])]
+                idx += 500
+                if (idx >= self.X_train.shape[0]):
+                    idx = 0
                 if i % 100 == 0:
                     train_accuracy = self.accuracy.eval(feed_dict={
                         self.x: batch_xs, self.y_: batch_ys, self.keep_prob: 1.0})
-                    print("step %d, training accuracy %d" %(i, train_accuracy * 100) + "%")
-                self.train_step.run(feed_dict={self.x: batch_xs, self.y_: batch_ys, self.keep_prob: 0.5})
-                
-            save_path = self.saver.save(sess, "model.ckpt")
-            print ("Model saved in file: ", save_path)
+                    test_accuracy = self.accuracy.eval(feed_dict={
+                        self.x: self.X_test, self.y_: self.y_test, self.keep_prob: 1.0})
+                    print("step %d, training accuracy %3f, test accuracy %3f" %(i, train_accuracy, test_accuracy))
+                _, loss = sess.run((self.train_step, self.cross_entropy), feed_dict={self.x: batch_xs, self.y_: batch_ys, self.keep_prob: 0.5})
+                if i % 100 == 0:
+                    print("The loss function is: %f" %(loss))
+                    if (loss < best_loss):
+                        save_path = self.saver.save(sess, self.filename)
+                        print ("Model saved in file:", save_path)
+                        best_loss = loss         
 
     def predict(self, img):
-        img = 255 - img
-        resized = cv2.resize(img, (28, 28), interpolation = cv2.INTER_CUBIC)[:, :, 0]
-        resized = resized.reshape(1, -1)
-        if (not(os.path.exists(self.filename + ".index"))):
+        resized = normalize(img)
+        resized = np.where(resized > 0.3, 1, 0)
+        resized = np.concatenate((resized, resized, resized), 2)
+        kernel = np.ones((3, 3), np.uint8)
+        resized = cv2.morphologyEx(np.uint8(resized), cv2.MORPH_CLOSE, kernel)
+        kernel = np.ones((4, 4), np.uint8)
+        resized = cv2.morphologyEx(np.uint8(resized), cv2.MORPH_OPEN, kernel)
+        kernel = np.ones((2, 2), np.uint8)
+        resized = cv2.erode(np.uint8(resized), kernel)
+        #print(resized.shape)
+        resized = cv2.resize(resized, (28, 28), interpolation = cv2.INTER_AREA)
+        resized = cv2.blur(resized, (5, 5))
+        #print(resized.shape)
+        resized = resized[:, :, 0:1]
+        resized = np.expand_dims(resized, 0)
+        if (not(os.path.exists(self.filename + ".meta"))):
             print("not exist")
             self.train()
         with tf.Session() as sess:
             sess.run(self.init_op)
-            self.saver.restore(sess, "model.ckpt")
+            self.saver.restore(sess, self.filename)
             # print ("Model restored.")  
             prediction = tf.argmax(self.y_conv, 1)[0]
-            return prediction.eval(feed_dict = {self.x: resized, self.keep_prob: 1.0}, session=sess)
-
-        
+            prob = tf.reduce_max(self.y_conv, 1)[0]
+            return sess.run((prob, prediction), feed_dict = {self.x: resized, self.keep_prob: 1.0})
+      
         
 
 
