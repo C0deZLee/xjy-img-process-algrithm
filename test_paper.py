@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from MNIST import *
+from .MNIST import *
 import os
 
 class testPaper:

@@ -1,8 +1,8 @@
-# -*- coding: UTF-8 -*-
 
-from test_paper import *
 import json
 import os
+
+from .test_paper import *
 
 class scoreSystem:
     def __init__(self, template, raw_img_dir, cropped, model_file, data_dir, warm_start, bulk_load, raw_file_path_list):
