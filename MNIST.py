@@ -30,6 +30,7 @@ def normalize(img):
 
 class mnistModel:
     def __init__(self, filename, datadir, warm_start):
+        tf.reset_default_graph()
         self.filename = filename
         self.warm_start = warm_start
         self.X_train = np.zeros((1, 28, 28, 1))
@@ -126,6 +127,7 @@ class mnistModel:
 
 
     def train(self):
+        sess = tf.Session()
         with tf.Session() as sess:
             sess.run(self.init_op)
             if (self.warm_start and os.path.exists(self.filename + ".meta")):
@@ -171,13 +173,18 @@ class mnistModel:
         if (not(os.path.exists(self.filename + ".meta"))):
             print("not exist")
             self.train()
+        sess = tf.Session()
         with tf.Session() as sess:
             sess.run(self.init_op)
             self.saver.restore(sess, self.filename)
             # print ("Model restored.")  
             prediction = tf.argmax(self.y_conv, 1)[0]
             prob = tf.reduce_max(self.y_conv, 1)[0]
-            return sess.run((prob, prediction), feed_dict = {self.x: resized, self.keep_prob: 1.0})
+            self.saver.restore(sess, self.filename)
+            prob_, prediction_ = sess.run((prob, prediction), feed_dict = {self.x: resized, self.keep_prob: 1.0})
+            return (prob_, prediction_)
+
+
       
         
 
