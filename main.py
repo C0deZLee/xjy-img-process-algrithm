@@ -12,8 +12,9 @@ parser.add_argument('--template', default="Template.json", help="识别模版JSO
 parser.add_argument('--dir', default="raw_img", help="学生原始答题卡地址 (默认为raw_img/)")
 parser.add_argument('--data_dir', default="dateset", help="训练数据地址 (默认为dataset/)")
 parser.add_argument('--warm_start', default=False, help="Continue training model")
-parser.add_argument('--bulk_load', default=True, help="是否从文件夹批量载入")
-parser.add_argument('--raw_file_list', default="", help="学生原始答题列表,以逗号隔开,最多四个")
+parser.add_argument('--bulk_load', default=False, help="是否从文件夹批量载入")
+parser.add_argument(
+    '--raw_file_list', default="E77673B9X114047_12102019_084354_0017.jpg,E77673B9X114047_12102019_084354_0018.jpg", help="学生原始答题列表,以逗号隔开,最多四个")
 args = parser.parse_args()
 
 def main():
@@ -26,6 +27,8 @@ def main():
         system.trainModel()
 
     system.score()
+
+
 
 if __name__ == '__main__':
     main()

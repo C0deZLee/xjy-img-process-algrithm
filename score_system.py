@@ -5,7 +5,7 @@ import json
 import os
 
 class scoreSystem:
-    def __init__(self, template, raw_img_dir, cropped, model_file, data_dir, warm_start, bulk_load, raw_file_list):
+    def __init__(self, template, raw_img_dir, cropped, model_file, data_dir, warm_start, bulk_load, raw_file_path_list):
         """
         @Params
         template                          识别模版JSON文件 (默认为Template.json)
@@ -26,7 +26,6 @@ class scoreSystem:
         self.model = mnistModel(model_file, data_dir, warm_start)  # 识别模型
 
         self.bulk_load = bulk_load  # 是否一次性载入多张答题卡
-
 
         page_nums = len(self.template["pages"]) # 有几页
 
@@ -55,11 +54,17 @@ class scoreSystem:
                 if (idx >= file_nums):
                     break
                 
-                self.papers.append(testPaper(raw_file_list, self.raw_img_dir, self.cropped, len(self.papers), self.template))
+                self.papers.append(testPaper(raw_file_list, self.raw_img_dir, self.cropped,
+                                             raw_file_list[0].replace('.jpg', ''), self.template))
                 print("Load test paper: " + str(len(self.papers)))
 
-            else:
-                pass
+        else:
+            raw_file_list = raw_file_path_list.split(',')
+            print(raw_file_list)
+            self.papers.append(testPaper(raw_file_list, self.raw_img_dir,
+                                            self.cropped, raw_file_list[0].replace('.jpg', ''), self.template))
+            print("Load test paper: " + str(len(self.papers)))
+
     
     def trainModel(self):
         """训练模型"""
@@ -90,11 +95,33 @@ class scoreSystem:
                     os.mkdir(filedir)
 
                 # 保存result_json
-                filepath = os.path.join(filedir, "result_json" + str(idx) + ".json")
+                filepath = os.path.join(filedir, "result_json" + str(paper.id) + ".json")
                 
                 with open(filepath, 'w') as f:
                     f.write(json.dumps(paper.result))
 
-                print("Score finished: " + str(idx+1) + "/" + str(len(self.papers)))
+                print("Score finished: " + str(paper.id) + "  " + str(idx+1) + "/" + str(len(self.papers)))
         else:
-            pass
+            paper = self.papers[0]
+            idx = paper.id
+            # 如果不是裁剪过的图片, 则裁剪图片
+            if not self.cropped:
+                cropped_list = paper.crop(cropped_sheets_dir)
+
+            paper.score(self.model, hand_written_student_code_dir, cropped_write_questions_dir)
+
+            # 创建文件路径
+            filedir = result_json_dir
+
+            if (not(os.path.exists(filedir))):
+                os.mkdir(filedir)
+
+            # 保存result_json
+            filepath = os.path.join(filedir, "result_json" + str(idx) + ".json")
+
+            with open(filepath, 'w') as f:
+                f.write(json.dumps(paper.result))
+
+            print("Score finished: " + str(paper.id))
+
+            return (filepath, paper.result)
