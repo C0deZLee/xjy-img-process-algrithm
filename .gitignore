@@ -137,3 +137,7 @@ dmypy.json
 # migration files
 img_process_web_server/img_process_web_server/migrations
 ~img_process_web_server/img_process_web_server/migrations/__init__.py
+
+# dataset
+train_data/
+test_data/
