@@ -2,7 +2,7 @@
 import json
 import os
 
-from .test_paper import *
+from test_paper import *
 
 class scoreSystem:
     def __init__(self, template, raw_img_dir, cropped, model_file, data_dir, warm_start, bulk_load, raw_file_path_list):
@@ -73,10 +73,27 @@ class scoreSystem:
 
     def score(self):
         """判分"""
+        if (not(os.path.exists(self.raw_img_dir))):
+            os.mkdir(self.raw_img_dir)
+
         cropped_sheets_dir = os.path.join(self.raw_img_dir, "cropped_sheets")
+
+        if (not(os.path.exists(cropped_sheets_dir))):
+            os.mkdir(cropped_sheets_dir)
         hand_written_student_code_dir = os.path.join(self.raw_img_dir, "hand_written_student_code")
+
+        if (not(os.path.exists(hand_written_student_code_dir))):
+            os.mkdir(hand_written_student_code_dir)
+
         cropped_write_questions_dir = os.path.join(self.raw_img_dir, "cropped_write_questions")
+
+        if (not(os.path.exists(cropped_write_questions_dir))):
+            os.mkdir(cropped_write_questions_dir)
+
         result_json_dir = os.path.join(self.raw_img_dir, "result_json")
+
+        if (not(os.path.exists(result_json_dir))):
+            os.mkdir(result_json_dir)
 
         if self.bulk_load:  # 读取文件夹下全部的学生原始答题卡
 
@@ -90,9 +107,6 @@ class scoreSystem:
                 
                 # 创建文件路径
                 filedir = result_json_dir
-
-                if (not(os.path.exists(filedir))):
-                    os.mkdir(filedir)
 
                 # 保存result_json
                 filepath = os.path.join(filedir, "result_json" + str(paper.id) + ".json")
@@ -112,9 +126,6 @@ class scoreSystem:
 
             # 创建文件路径
             filedir = result_json_dir
-
-            if (not(os.path.exists(filedir))):
-                os.mkdir(filedir)
 
             # 保存result_json
             filepath = os.path.join(filedir, "result_json" + str(idx) + ".json")
