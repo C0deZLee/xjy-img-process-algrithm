@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import argparse
-from .score_system import *
+from score_system import *
 
 parser = argparse.ArgumentParser()
 
