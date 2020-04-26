@@ -1,7 +1,8 @@
 # -*- coding: UTF-8 -*-
 
-from MNIST import *
+from .MNIST import *
 import os
+
 
 class testPaper:
     def __init__(self, rawFileList, bucket, isCrop, id, template):
@@ -23,7 +24,7 @@ class testPaper:
         if (not(os.path.exists(save_dir))):
             os.mkdir(save_dir)
         if (not(os.path.exists(filedir))):
-            os.mkdir(filedir) 
+            os.mkdir(filedir)
         for i in range(len(self.pagesImage)):
             img = self.pagesImage[i][self.y0:self.y1, self.x0:self.x1]
             filename = "page" + str(i) + ".jpg"
@@ -55,7 +56,7 @@ class testPaper:
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
         mask = cv2.inRange(hsv, lower_red, upper_red)
         return mask
-    
+
     def getAverageIntensityValue(self, pageIdx, x, y, width, height, isMask):
         if (not(self.isCrop)):
             x += self.x0
@@ -72,7 +73,7 @@ class testPaper:
         if (not(os.path.exists(id_dir))):
             os.mkdir(id_dir)
         if (not(os.path.exists(filedir))):
-            os.mkdir(filedir) 
+            os.mkdir(filedir)
         self.result["studentCode"] = {}
         idString = ""
         x = self.template["pages"][0]["ID"]["x"]
@@ -107,10 +108,10 @@ class testPaper:
         for i in range(w):
             if (self.pagesImage[0].item(int(yc), x+w-i, 1) < 252):
                 xe = x + w - i
-                break    
-        num = len(self.template["pages"][0]["ID"]) - 5 
+                break
+        num = len(self.template["pages"][0]["ID"]) - 5
         w = (xe - xs) / num
-        h = ye - ys    
+        h = ye - ys
         conf = ""
         for i in range(num):
             if i != 0:
@@ -181,7 +182,7 @@ class testPaper:
             choicesNum = len(self.template["pages"][i]["Choice"])
             for j in range(choicesNum):
                 self.result["Choice"].append(self.scoreSingleChoice(i, j))
-    
+
     def scoreSingleWriteQuestion(self, pageIdx, writeIdx, save_dir):
         writeRes = {}
         write = self.template["pages"][pageIdx]["WriteQuestions"][writeIdx]
@@ -189,7 +190,8 @@ class testPaper:
         writeRes["score"] = 0
         maxAverage = 0
         for roi in write["scores"]:
-            roiMean = self.getAverageIntensityValue(pageIdx, int(roi["x"]), int(roi["y"]), int(roi["width"]), int(roi["height"]), True)
+            roiMean = self.getAverageIntensityValue(pageIdx, int(roi["x"]), int(
+                roi["y"]), int(roi["width"]), int(roi["height"]), True)
             if (roiMean > maxAverage):
                 maxAverage = roiMean
                 writeRes["score"] = roi["Score"]
@@ -197,7 +199,8 @@ class testPaper:
             tenscore = 0
             maxAverage = 0
             for roi in write["tenscores"]:
-                roiMean = self.getAverageIntensityValue(pageIdx, int(roi["x"]), int(roi["y"]), int(roi["width"]), int(roi["height"]), True)
+                roiMean = self.getAverageIntensityValue(pageIdx, int(roi["x"]), int(
+                    roi["y"]), int(roi["width"]), int(roi["height"]), True)
                 if (roiMean > maxAverage):
                     maxAverage = roiMean
                     if (maxAverage > 2):
@@ -231,7 +234,7 @@ class testPaper:
         cv2.imwrite(os.path.join(filedir, filename), img)
         writeRes["Items"] = [{"Note": "Only one block", "ItemID": 1, "path": os.path.join(filedir, filename)}]
         return writeRes
-    
+
     def scoreWriteQuestions(self, save_dir):
         pagesNum = len(self.template["pages"])
         self.result["WriteQuestion"] = []
@@ -247,6 +250,4 @@ class testPaper:
         self.identifyCode2()
         self.scoreChoices()
         self.scoreWriteQuestions(save_dir)
-
-
 
