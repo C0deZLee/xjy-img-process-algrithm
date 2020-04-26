@@ -2,7 +2,8 @@
 import json
 import os
 
-from test_paper import *
+from .test_paper import *
+
 
 class scoreSystem:
     def __init__(self, template, raw_img_dir, cropped, model_file, data_dir, warm_start, bulk_load, raw_file_path_list):
@@ -17,17 +18,17 @@ class scoreSystem:
         bulk_load                         是否一次性载入多张答题卡
         raw_file_list                     学生原始答题列表,以逗号隔开,最多四个
         """
-        self.papers = [] # 答题卡列表
-        self.cropped = cropped # If img is cropped
+        self.papers = []  # 答题卡列表
+        self.cropped = cropped  # If img is cropped
         self.template = template  # 识别模版JSON
 
-        self.raw_img_dir = raw_img_dir # 原始文件地址
+        self.raw_img_dir = raw_img_dir  # 原始文件地址
 
         self.model = mnistModel(model_file, data_dir, warm_start)  # 识别模型
 
         self.bulk_load = bulk_load  # 是否一次性载入多张答题卡
 
-        page_nums = len(self.template["pages"]) # 有几页
+        page_nums = len(self.template["pages"])  # 有几页
 
         if bulk_load:  # 读取文件夹下全部的学生原始答题卡
             file_list = []
@@ -35,7 +36,7 @@ class scoreSystem:
             for (dirpath, dirnames, filenames) in os.walk(raw_img_dir):
                 file_list.extend(filenames)
                 break
-            
+
             file_list.sort()
             file_nums = len(file_list)
             idx = 0
@@ -53,7 +54,7 @@ class scoreSystem:
                     idx += 1
                 if (idx >= file_nums):
                     break
-                
+
                 self.papers.append(testPaper(raw_file_list, self.raw_img_dir, self.cropped,
                                              raw_file_list[0].replace('.jpg', ''), self.template))
                 print("Load test paper: " + str(len(self.papers)))
@@ -62,10 +63,9 @@ class scoreSystem:
             raw_file_list = raw_file_path_list.split(',')
             print(raw_file_list)
             self.papers.append(testPaper(raw_file_list, self.raw_img_dir,
-                                            self.cropped, raw_file_list[0].replace('.jpg', ''), self.template))
+                                         self.cropped, raw_file_list[0].replace('.jpg', ''), self.template))
             print("Load test paper: " + str(len(self.papers)))
 
-    
     def trainModel(self):
         """训练模型"""
         self.model.getdata()
@@ -104,13 +104,13 @@ class scoreSystem:
                     cropped_list = paper.crop(cropped_sheets_dir)
 
                 paper.score(self.model, hand_written_student_code_dir, cropped_write_questions_dir)
-                
+
                 # 创建文件路径
                 filedir = result_json_dir
 
                 # 保存result_json
                 filepath = os.path.join(filedir, "result_json" + str(paper.id) + ".json")
-                
+
                 with open(filepath, 'w') as f:
                     f.write(json.dumps(paper.result))
 

@@ -1,18 +1,9 @@
 # -*- coding: UTF-8 -*-
 
-from MNIST import *
+from .MNIST import *
 import os
 import zipfile
 
-def findZero(img):
-    x0 = img.shape[1]
-    y0 = img.shape[0]
-    for i in range(200):
-        for j in range(200):
-            if img.item(i, j, 1) < 100:
-                x0 = min(x0, j)
-                y0 = min(y0, i)
-    return (x0, y0)
 
 class testPaper:
     def __init__(self, rawFileList, bucket, isCrop, id, template):
@@ -21,10 +12,10 @@ class testPaper:
         self.rawFileList = rawFileList
         for file_ in self.rawFileList:
             self.result["files"].append(file_)
-        self.x0 = []
-        self.y0 = []
-        self.x1 = []
-        self.y1 = []
+        self.x0 = 147
+        self.y0 = 136
+        self.x1 = self.x0 + template["pages"][0]["Marker"]["x"] + template["pages"][0]["Marker"]["width"]
+        self.y1 = self.y0 + template["pages"][0]["Marker"]["y"] + template["pages"][0]["Marker"]["height"]
         self.isCrop = isCrop
         self.template = template
         self.id = id
@@ -32,39 +23,10 @@ class testPaper:
     def crop(self, save_dir):
         filedir = os.path.join(save_dir, "student" + str(self.id))
         if (not(os.path.exists(filedir))):
-            os.mkdir(filedir) 
+            os.mkdir(filedir)
         self.result["zipfile"] = []
         for i in range(len(self.pagesImage)):
-            img = self.pagesImage[i]
-            h = img.shape[0]
-            w = img.shape[1]
-            y0 = 0
-            x0 = 0
-            y1 = h - 1
-            x1 = w - 1
-            for j in range(h - 1, -1, -1):
-                if img.item(j, int(w / 2), 1) > 250:
-                    y1 = j
-                    break
-            for j in range(0, h):
-                if img.item(j, int(w / 2), 1) > 250:
-                    y0 = j
-                    break
-            for j in range(w - 1, -1, -1):
-                if img.item(int(h / 2), j, 1) > 250:
-                    x1 = j
-                    break
-            for j in range(0, w):
-                if img.item(int(h / 2), j, 1) > 250:
-                    x0 = j
-                    break
-            img = cv2.resize(img[y0:y1, x0:x1], (w, h), interpolation = cv2.INTER_CUBIC)
-            (x0, y0) = findZero(img)
-            self.x0.append(x0)
-            self.y0.append(y0)
-            self.x1.append(self.x0[-1] + self.template["pages"][0]["Marker"]["x"] + self.template["pages"][0]["Marker"]["width"])
-            self.y1.append(self.y0[-1] + self.template["pages"][0]["Marker"]["y"] + self.template["pages"][0]["Marker"]["height"])
-            img = img[self.y0[i]:self.y1[i], self.x0[i]:self.x1[i]]
+            img = self.pagesImage[i][self.y0:self.y1, self.x0:self.x1]
             filename = "page" + str(i) + ".jpg"
             cv2.imwrite(os.path.join(filedir, filename), img)
             with zipfile.ZipFile(os.path.join(filedir, "page" + str(i) + ".zip"), 'w') as z:
@@ -78,8 +40,8 @@ class testPaper:
         w = self.template["pages"][0]["Name"]["width"]
         h = self.template["pages"][0]["Name"]["height"]
         if (not(self.isCrop)):
-            x += self.x0[0]
-            y += self.y0[0]
+            x += self.x0
+            y += self.y0
         filename = "name.jpg"
         img = self.pagesImage[0][y:y+h, x:x+w]
         cv2.imwrite(os.path.join(filedir, filename), img)
@@ -97,11 +59,11 @@ class testPaper:
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
         mask = cv2.inRange(hsv, lower_red, upper_red)
         return mask
-    
+
     def getAverageIntensityValue(self, pageIdx, x, y, width, height, isMask):
         if (not(self.isCrop)):
-            x += self.x0[pageIdx]
-            y += self.y0[pageIdx]
+            x += self.x0
+            y += self.y0
         img = self.pagesImage[pageIdx]
         roi = img[y:y+height, x:x+width]
         if (isMask):
@@ -112,7 +74,7 @@ class testPaper:
     def identifyCode(self, model, id_dir):
         filedir = os.path.join(id_dir, "student" + str(self.id))
         if (not(os.path.exists(filedir))):
-            os.mkdir(filedir) 
+            os.mkdir(filedir)
         self.result["studentCode"] = {}
         idString = ""
         x = self.template["pages"][0]["ID"]["x"]
@@ -120,8 +82,8 @@ class testPaper:
         w = self.template["pages"][0]["ID"]["width"]
         h = self.template["pages"][0]["ID"]["height"]
         if (not(self.isCrop)):
-            x += self.x0[0]
-            y += self.y0[0]
+            x += self.x0
+            y += self.y0
         filename = "id.jpg"
         img = self.pagesImage[0][y:y+h, x:x+w]
         cv2.imwrite(os.path.join(filedir, filename), img)
@@ -147,10 +109,10 @@ class testPaper:
         for i in range(w):
             if (self.pagesImage[0].item(int(yc), x+w-i, 1) < 252):
                 xe = x + w - i
-                break    
-        num = len(self.template["pages"][0]["ID"]) - 5 
+                break
+        num = len(self.template["pages"][0]["ID"]) - 5
         w = (xe - xs) / num
-        h = ye - ys    
+        h = ye - ys
         conf = ""
         for i in range(num):
             if i != 0:
@@ -159,7 +121,15 @@ class testPaper:
             y_tmp = ys
             img = 255 - self.pagesImage[0][int(y_tmp)+10:int(y_tmp+h)-10, int(x_tmp)+5:int(x_tmp+w)-5]
             filename = "digit" + str(i) + ".jpg"
-            img2 = normalize(img)
+            img2 = np.where(normalize(img) > 0.3, 1, 0)
+            img2 = np.concatenate((img2, img2, img2), 2)
+            kernel = np.ones((3, 3), np.uint8)
+            img2 = cv2.morphologyEx(np.uint8(img2), cv2.MORPH_CLOSE, kernel)
+            kernel = np.ones((4, 4), np.uint8)
+            img2 = cv2.morphologyEx(np.uint8(img2), cv2.MORPH_OPEN, kernel)
+            kernel = np.ones((2, 2), np.uint8)
+            img2 = cv2.erode(np.uint8(img2), kernel)
+            cv2.blur(img2, (5, 5))
             cv2.imwrite(os.path.join(filedir, filename), img2 * 255)
             prob, digit = model.predict(img)
             idString += str(digit)
@@ -213,7 +183,7 @@ class testPaper:
             choicesNum = len(self.template["pages"][i]["Choice"])
             for j in range(choicesNum):
                 self.result["Choice"].append(self.scoreSingleChoice(i, j))
-    
+
     def scoreSingleWriteQuestion(self, pageIdx, writeIdx, save_dir):
         writeRes = {}
         write = self.template["pages"][pageIdx]["WriteQuestions"][writeIdx]
@@ -221,7 +191,8 @@ class testPaper:
         writeRes["score"] = 0
         maxAverage = 0
         for roi in write["scores"]:
-            roiMean = self.getAverageIntensityValue(pageIdx, int(roi["x"]), int(roi["y"]), int(roi["width"]), int(roi["height"]), True)
+            roiMean = self.getAverageIntensityValue(pageIdx, int(roi["x"]), int(
+                roi["y"]), int(roi["width"]), int(roi["height"]), True)
             if (roiMean > maxAverage):
                 maxAverage = roiMean
                 writeRes["score"] = roi["Score"]
@@ -229,7 +200,8 @@ class testPaper:
             tenscore = 0
             maxAverage = 0
             for roi in write["tenscores"]:
-                roiMean = self.getAverageIntensityValue(pageIdx, int(roi["x"]), int(roi["y"]), int(roi["width"]), int(roi["height"]), True)
+                roiMean = self.getAverageIntensityValue(pageIdx, int(roi["x"]), int(
+                    roi["y"]), int(roi["width"]), int(roi["height"]), True)
                 if (roiMean > maxAverage):
                     maxAverage = roiMean
                     if (maxAverage > 2):
@@ -240,8 +212,8 @@ class testPaper:
         w = write["options"][0]["width"]
         h = write["options"][0]["height"]
         if (not(self.isCrop)):
-            x += self.x0[pageIdx]
-            y += self.y0[pageIdx]
+            x += self.x0
+            y += self.y0
         img = self.pagesImage[pageIdx][y:y+h, x:x+w]
         if (write["options"][0]["JoinUp"] == 2):
             write2 = self.template["pages"][pageIdx + 1]["WriteQuestions"][0]
@@ -250,8 +222,8 @@ class testPaper:
             w2 = write2["options"][0]["width"]
             h2 = write2["options"][0]["height"]
             if (not(self.isCrop)):
-                x2 += self.x0[pageIdx + 1]
-                y2 += self.y0[pageIdx + 1]
+                x2 += self.x0
+                y2 += self.y0
             img2 = self.pagesImage[pageIdx + 1][y2:y2+h2, x2:x2+w2]
             img = np.concatenate((img, img2))
         filename = "writequestion_" + str(write["SN"]) + ".jpg"
@@ -261,7 +233,7 @@ class testPaper:
         cv2.imwrite(os.path.join(filedir, filename), img)
         writeRes["Items"] = [{"Note": "Only one block", "ItemID": 1, "path": os.path.join(filedir, filename)}]
         return writeRes
-    
+
     def scoreWriteQuestions(self, save_dir):
         pagesNum = len(self.template["pages"])
         self.result["WriteQuestion"] = []
@@ -277,6 +249,3 @@ class testPaper:
         self.identifyCode2()
         self.scoreChoices()
         self.scoreWriteQuestions(save_dir)
-
-
-

@@ -22,10 +22,11 @@ def shuffle_in_unison(a, b):
     return shuffled_a, shuffled_b
 
 def normalize(img):
+    img = img[:, :, 0:1]
     minv = np.min(img)
     maxv = np.max(img)
     img = img * (img - minv) / (maxv - minv)
-    return np.where(img > 0.3, 1, 0)
+    return img
 
 class mnistModel:
     def __init__(self, filename, datadir, warm_start):
@@ -108,8 +109,8 @@ class mnistModel:
                     if img is None:
                         print(files[2][j])
                         continue
-                    img = cv2.resize(normalize(img), (28, 28), interpolation = cv2.INTER_AREA)
-                    X_train[j] = img[:, :, 0:1]
+                    img2 = normalize(cv2.resize(img, (28, 28), interpolation = cv2.INTER_AREA))
+                    X_train[j] = np.where(img2 > 0.3, 1, 0)
                     y_train[j][i] = 1 
                 if (i == 0):
                     self.X_train = X_train
@@ -154,8 +155,18 @@ class mnistModel:
                         best_loss = loss         
 
     def predict(self, img):
+        resized = normalize(img)
+        resized = np.where(resized > 0.3, 1, 0)
+        resized = np.concatenate((resized, resized, resized), 2)
+        kernel = np.ones((3, 3), np.uint8)
+        resized = cv2.morphologyEx(np.uint8(resized), cv2.MORPH_CLOSE, kernel)
+        kernel = np.ones((4, 4), np.uint8)
+        resized = cv2.morphologyEx(np.uint8(resized), cv2.MORPH_OPEN, kernel)
+        kernel = np.ones((2, 2), np.uint8)
+        resized = cv2.erode(np.uint8(resized), kernel)
         #print(resized.shape)
-        resized = cv2.resize(img, (28, 28), interpolation = cv2.INTER_AREA)
+        resized = cv2.resize(resized, (28, 28), interpolation = cv2.INTER_AREA)
+        resized = cv2.blur(resized, (5, 5))
         #print(resized.shape)
         resized = resized[:, :, 0:1]
         resized = np.expand_dims(resized, 0)
