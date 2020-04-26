@@ -2,6 +2,7 @@
 
 from .MNIST import *
 import os
+import zipfile
 
 
 class testPaper:
@@ -21,14 +22,16 @@ class testPaper:
 
     def crop(self, save_dir):
         filedir = os.path.join(save_dir, "student" + str(self.id))
-        if (not(os.path.exists(save_dir))):
-            os.mkdir(save_dir)
         if (not(os.path.exists(filedir))):
             os.mkdir(filedir)
+        self.result["zipfile"] = []
         for i in range(len(self.pagesImage)):
             img = self.pagesImage[i][self.y0:self.y1, self.x0:self.x1]
             filename = "page" + str(i) + ".jpg"
             cv2.imwrite(os.path.join(filedir, filename), img)
+            with zipfile.ZipFile(os.path.join(filedir, "page" + str(i) + ".zip"), 'w') as z:
+                z.write(os.path.join(filedir, filename))
+            self.result["zipfile"].append(os.path.join(filedir, "page" + str(i) + ".zip"))
 
     def cropName(self, id_dir):
         filedir = os.path.join(id_dir, "student" + str(self.id))
@@ -70,8 +73,6 @@ class testPaper:
 
     def identifyCode(self, model, id_dir):
         filedir = os.path.join(id_dir, "student" + str(self.id))
-        if (not(os.path.exists(id_dir))):
-            os.mkdir(id_dir)
         if (not(os.path.exists(filedir))):
             os.mkdir(filedir)
         self.result["studentCode"] = {}
@@ -225,8 +226,6 @@ class testPaper:
                 y2 += self.y0
             img2 = self.pagesImage[pageIdx + 1][y2:y2+h2, x2:x2+w2]
             img = np.concatenate((img, img2))
-        if (not(os.path.exists(save_dir))):
-            os.mkdir(save_dir)
         filename = "writequestion_" + str(write["SN"]) + ".jpg"
         filedir = os.path.join(save_dir, "student" + str(self.id))
         if (not(os.path.exists(filedir))):
@@ -250,4 +249,3 @@ class testPaper:
         self.identifyCode2()
         self.scoreChoices()
         self.scoreWriteQuestions(save_dir)
-
