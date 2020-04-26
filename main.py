@@ -5,7 +5,7 @@ from .score_system import *
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--cropped', default=False, help="答题卡是否裁切 (什么意思?)")
+parser.add_argument('--transform', default=False, help="是否用透视变换")
 parser.add_argument('--model', type=str, default="model.ckpt", help="训练模型存储地点 (默认为model.ckpt)")
 parser.add_argument('--train', default=False, help="是否先训练模型 (默认为False)")
 parser.add_argument('--template', default="Template.json", help="识别模版JSON文件 (默认为test_data/template.json)")
@@ -21,8 +21,8 @@ args = parser.parse_args()
 def main():
     with open(args.template) as f:
         template = json.load(f)
-
-    system = scoreSystem(template, args.dir,  args.cropped, args.model,
+    
+    system = scoreSystem(template, args.dir, args.transform, args.model,
                          args.data_dir, args.warm_start, args.bulk_load, args.raw_file_list)
     if args.train:
         system.trainModel()

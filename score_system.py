@@ -6,7 +6,7 @@ from .test_paper import *
 
 
 class scoreSystem:
-    def __init__(self, template, raw_img_dir, cropped, model_file, data_dir, warm_start, bulk_load, raw_file_path_list):
+    def __init__(self, template, raw_img_dir, transform, model_file, data_dir, warm_start, bulk_load, raw_file_path_list):
         """
         @Params
         template                          识别模版JSON文件 (默认为Template.json)
@@ -19,7 +19,7 @@ class scoreSystem:
         raw_file_list                     学生原始答题列表,以逗号隔开,最多四个
         """
         self.papers = []  # 答题卡列表
-        self.cropped = cropped  # If img is cropped
+        self.transform = transform # Whether to do perspective transformation
         self.template = template  # 识别模版JSON
 
         self.raw_img_dir = raw_img_dir  # 原始文件地址
@@ -55,7 +55,7 @@ class scoreSystem:
                 if (idx >= file_nums):
                     break
 
-                self.papers.append(testPaper(raw_file_list, self.raw_img_dir, self.cropped,
+                self.papers.append(testPaper(raw_file_list, self.raw_img_dir, self.transform,
                                              raw_file_list[0].replace('.jpg', ''), self.template))
                 print("Load test paper: " + str(len(self.papers)))
 
@@ -63,7 +63,7 @@ class scoreSystem:
             raw_file_list = raw_file_path_list.split(',')
             print(raw_file_list)
             self.papers.append(testPaper(raw_file_list, self.raw_img_dir,
-                                         self.cropped, raw_file_list[0].replace('.jpg', ''), self.template))
+                                         self.transform, raw_file_list[0].replace('.jpg', ''), self.template))
             print("Load test paper: " + str(len(self.papers)))
 
     def trainModel(self):
@@ -118,9 +118,8 @@ class scoreSystem:
         else:
             paper = self.papers[0]
             idx = paper.id
-            # 如果不是裁剪过的图片, 则裁剪图片
-            if not self.cropped:
-                cropped_list = paper.crop(cropped_sheets_dir)
+            # 矫正图片
+            cropped_list = paper.crop(cropped_sheets_dir)
 
             paper.score(self.model, hand_written_student_code_dir, cropped_write_questions_dir)
 
