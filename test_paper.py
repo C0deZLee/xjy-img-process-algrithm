@@ -23,7 +23,7 @@ class testPaper:
 
     def cropName(self):
         """裁剪姓名区域"""
-        fileName = "student_name.jpg" # 文件名
+        fileName = self.id + "_student_name.jpg" # 文件名
         filePath = os.path.join(self.saveDir, fileName) # 文件路径
 
         # 获取裁切区域
@@ -40,7 +40,7 @@ class testPaper:
 
     def cropStudentCode(self):
         """裁剪手写学号"""
-        fileName = "student_code1.jpg" # 文件名
+        fileName = self.id + "_student_code1.jpg" # 文件名
         filePath = os.path.join(self.saveDir, fileName) # 文件路径
 
         # 获取裁切区
@@ -197,7 +197,7 @@ class testPaper:
             writeRes["score"] += tenscore
 
         # 裁切主观题图片
-        fileName = "writequestion_" + str(write["SN"]) + ".jpg" # 文件名
+        fileName = self.id + "_writequestion_" + str(write["SN"]) + ".jpg" # 文件名
         filePath = os.path.join(self.saveDir, fileName) # 文件路径
 
         # 获取裁切区域
