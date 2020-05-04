@@ -1,73 +1,62 @@
-from .MNIST import *
 import os
-import zipfile
+from .MNIST import *
 
 class testPaper:
-    def __init__(self, rawFileList, bucket, id, template):
-        self.result = {"files": []}
-        self.pagesImage = [cv2.imread(os.path.join(bucket, x)) for x in rawFileList]
-        self.rawFileList = rawFileList
-        for file_ in self.rawFileList:
-            self.result["files"].append(file_)
-        self.template = template
-        self.id = id
+    def __init__(self, rawFileFolder, rawFileNameList, template, modelPath=None, dataPath=None):
+        """答题卡初始化"""
+        # 答题卡原始文件路径列表
+        self.rawFilePathList = [os.path.join(rawFileFolder, name) for name in rawFileNameList]
+        # 答题卡的图片文件实例列表
+        self.rawImages = [cv2.imread(f) for f in self.rawFilePathList] 
+        # 答题卡识别模版
+        self.template = template 
+        # 答题卡ID
+        self.id = rawFileNameList[0].split('.')[0]
+        # 识别模型地址
+        self.model = mnistModel(modelPath, dataPath, False)
+        # 裁剪图片保存地址
+        self.saveDir = os.path.join(rawFileFolder, self.id)
+        if (not(os.path.exists(self.saveDir))):
+            os.mkdir(self.saveDir)
+        # 初始化返回的JSON文件
+        self.resultJSON = {"files": self.rawFilePathList, 'templateId': self.template["templateId"]} 
 
-    def crop(self, save_dir):
-        filedir = os.path.join(save_dir, "student" + str(self.id))
-        if (not(os.path.exists(filedir))):
-            os.mkdir(filedir)
-        self.result["zipfile"] = []
-        for i in range(len(self.pagesImage)):
-            img = self.pagesImage[i]
-            h = img.shape[0]
-            w = img.shape[1]
-            y0 = 0
-            x0 = 0
-            y1 = h - 1
-            x1 = w - 1
-            for j in range(h - 1, -1, -1):
-                if img.item(j, int(w / 2), 1) > 250:
-                    y1 = j
-                    break
-            for j in range(0, h):
-                if img.item(j, int(w / 2), 1) > 250:
-                    y0 = j
-                    break
-            for j in range(w - 1, -1, -1):
-                if img.item(int(h / 2), j, 1) > 250:
-                    x1 = j
-                    break
-            for j in range(0, w):
-                if img.item(int(h / 2), j, 1) > 250:
-                    x0 = j
-                    break
-            img = cv2.resize(img[y0:y1, x0:x1], (w, h), interpolation=cv2.INTER_CUBIC)
-            v = findCorner(img)
-            x = self.template["pages"][0]["Marker"]["x"] + self.template["pages"][0]["Marker"]["width"]
-            y = self.template["pages"][0]["Marker"]["y"] + self.template["pages"][0]["Marker"]["height"]
-            self.pagesImage[i] = self.pagesImage[i][v[0][0]:v[0][0]+y, v[0][1]:v[0][1]+x]
-            img = self.pagesImage[i]
-            filename = "page" + str(i) + ".jpg"
-            cv2.imwrite(os.path.join(filedir, filename), img)
+    def cropName(self):
+        """裁剪姓名区域"""
+        fileName = "student_name.jpg" # 文件名
+        filePath = os.path.join(self.saveDir, fileName) # 文件路径
 
-    def cropName(self, id_dir):
-        filedir = os.path.join(id_dir, "student" + str(self.id))
+        # 获取裁切区域
         x = self.template["pages"][0]["Name"]["x"]
         y = self.template["pages"][0]["Name"]["y"]
         w = self.template["pages"][0]["Name"]["width"]
         h = self.template["pages"][0]["Name"]["height"]
-        filename = "name.jpg"
-        img = self.pagesImage[0][y:y+h, x:x+w]
-        cv2.imwrite(os.path.join(filedir, filename), img)
-        self.result["studentName"] = {}
-        self.result["studentName"]["path"] = os.path.join(filedir, filename)
-        self.result["studentName"]["text"] = ""
-        self.result["studentName"]["confidence"] = "0"
 
-    def getTemplateId(self):
-        self.result["templateId"] = self.template["templateId"]
+        # 保存图片
+        cv2.imwrite(filePath, self.rawImages[0][y:y+h, x:x+w])
+        
+        # 保存JSON
+        self.resultJSON["studentName"] = {'path': filePath, 'text': '', 'confidence': ''}
+
+    def cropStudentCode(self):
+        """裁剪手写学号"""
+        fileName = "student_code1.jpg" # 文件名
+        filePath = os.path.join(self.saveDir, fileName) # 文件路径
+
+        # 获取裁切区
+        x = self.template["pages"][0]["ID"]["x"]
+        y = self.template["pages"][0]["ID"]["y"]
+        w = self.template["pages"][0]["ID"]["width"]
+        h = self.template["pages"][0]["ID"]["height"]
+
+        # 保存图片
+        cv2.imwrite(filePath, self.rawImages[0][y:y+h, x:x+w])
+
+        # 保存JSON
+        self.resultJSON["studentCode"] = {'path': filePath}
 
     def getSingleRedMask(self, img):
+        """获取红线"""
         lower_red = np.array([156, 43, 46])
         upper_red = np.array([180, 255, 255])
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
@@ -75,27 +64,22 @@ class testPaper:
         return mask
 
     def getAverageIntensityValue(self, pageIdx, x, y, width, height, isMask):
-        img = self.pagesImage[pageIdx]
+        img = self.rawImages[pageIdx]
         roi = img[y:y+height, x:x+width]
         if (isMask):
             roi = self.getSingleRedMask(roi)
         roiMean = roi.sum() / (width * height * 3)
         return roiMean
 
-    def identifyCode(self, model, id_dir):
-        filedir = os.path.join(id_dir, "student" + str(self.id))
-        if (not(os.path.exists(filedir))):
-            os.mkdir(filedir)
-        self.result["studentCode"] = {}
-        idString = ""
+    def identifyCode(self):
+        """识别手写学号"""
+
+        # 获取裁切区
         x = self.template["pages"][0]["ID"]["x"]
         y = self.template["pages"][0]["ID"]["y"]
         w = self.template["pages"][0]["ID"]["width"]
         h = self.template["pages"][0]["ID"]["height"]
-        filename = "id.jpg"
-        img = self.pagesImage[0][y:y+h, x:x+w]
-        cv2.imwrite(os.path.join(filedir, filename), img)
-        self.result["studentCode"]["path"] = os.path.join(filedir, filename)
+
         xc = x + w / 2
         yc = y + h / 2
         xs = x
@@ -103,42 +87,43 @@ class testPaper:
         ys = y
         ye = y + h
         for i in range(h):
-            if (self.pagesImage[0].item(y+i, int(xc), 1) < 252):
+            if (self.rawImages[0].item(y+i, int(xc), 1) < 252):
                 ys = y + i
                 break
         for i in range(h):
-            if (self.pagesImage[0].item(y+h-i, int(xc), 1) < 252):
+            if (self.rawImages[0].item(y+h-i, int(xc), 1) < 252):
                 ye = y + h - i
                 break
         for i in range(w):
-            if (self.pagesImage[0].item(int(yc), x+i, 1) < 252):
+            if (self.rawImages[0].item(int(yc), x+i, 1) < 252):
                 xs = x + i
                 break
         for i in range(w):
-            if (self.pagesImage[0].item(int(yc), x+w-i, 1) < 252):
+            if (self.rawImages[0].item(int(yc), x+w-i, 1) < 252):
                 xe = x + w - i
                 break
         num = len(self.template["pages"][0]["ID"]) - 5
         w = (xe - xs) / num
         h = ye - ys
         conf = ""
+        idString = ""
         for i in range(num):
             if i != 0:
                 conf += ", "
             x_tmp = xs + i * w
             y_tmp = ys
-            img = 255 - self.pagesImage[0][int(y_tmp)+10:int(y_tmp+h)-10, int(x_tmp)+5:int(x_tmp+w)-5]
-            filename = "digit" + str(i) + ".jpg"
-            img2 = normalize(img)
-            cv2.imwrite(os.path.join(filedir, filename), img2 * 255)
-            prob, digit = model.predict(img)
+            img = 255 - self.rawImages[0][int(y_tmp)+10:int(y_tmp+h)-10, int(x_tmp)+5:int(x_tmp+w)-5]
+            # filename = "digit" + str(i) + ".jpg"
+            # img2 = normalize(img)
+            # cv2.imwrite(os.path.join(filedir, filename), img2 * 255)
+            prob, digit = self.model.predict(img)
             idString += str(digit)
             conf += str(prob)
-        self.result["studentCode"]["text"] = idString
-        self.result["studentCode"]["confidence"] = conf
+        self.resultJSON["studentCode"]["text"] = idString
+        self.resultJSON["studentCode"]["confidence"] = conf
 
     def identifyCode2(self):
-        self.result["studentCode2"] = {"path": ""}
+        """识别填涂学号"""
         idString = ""
         ID = self.template["pages"][0]["ID"]
         for i in range(len(ID) - 5):
@@ -154,9 +139,10 @@ class testPaper:
                         continue
                     digit = str(roi["Digit"])
             idString += digit
-        self.result["studentCode2"]["text"] = idString
+        self.resultJSON["studentCode2"] = {'text': idString}
 
     def scoreSingleChoice(self, pageIdx, choiceIdx):
+        """识别单个选择题"""
         choiceRes = {}
         choice = self.template["pages"][pageIdx]["Choice"][choiceIdx]
         choiceRes["TopicNumber"] = choice["SN"]
@@ -177,14 +163,16 @@ class testPaper:
         return choiceRes
 
     def scoreChoices(self):
+        """识别选择题"""
         pagesNum = len(self.template["pages"])
-        self.result["Choice"] = []
+        self.resultJSON["Choice"] = []
         for i in range(pagesNum):
             choicesNum = len(self.template["pages"][i]["Choice"])
             for j in range(choicesNum):
-                self.result["Choice"].append(self.scoreSingleChoice(i, j))
+                self.resultJSON["Choice"].append(self.scoreSingleChoice(i, j))
 
-    def scoreSingleWriteQuestion(self, pageIdx, writeIdx, save_dir):
+    def scoreSingleWriteQuestion(self, pageIdx, writeIdx):
+        """识别单个主观题"""
         writeRes = {}
         write = self.template["pages"][pageIdx]["WriteQuestions"][writeIdx]
         writeRes["TopicNumber"] = write["SN"]
@@ -207,40 +195,59 @@ class testPaper:
                     if (maxAverage > 2):
                         tenscore = roi["Score"]
             writeRes["score"] += tenscore
+
+        # 裁切主观题图片
+        fileName = "writequestion_" + str(write["SN"]) + ".jpg" # 文件名
+        filePath = os.path.join(self.saveDir, fileName) # 文件路径
+
+        # 获取裁切区域
+        crossPage = False
         x = write["options"][0]["x"]
         y = write["options"][0]["y"]
         w = write["options"][0]["width"]
         h = write["options"][0]["height"]
-        img = self.pagesImage[pageIdx][y:y+h, x:x+w]
+        img = self.rawImages[pageIdx][y:y+h, x:x+w]
+        
+        # 跨页合并
         if (write["options"][0]["JoinUp"] == 2):
+            crossPage = True
             write2 = self.template["pages"][pageIdx + 1]["WriteQuestions"][0]
             x2 = write2["options"][0]["x"]
             y2 = write2["options"][0]["y"]
             w2 = write2["options"][0]["width"]
             h2 = write2["options"][0]["height"]
-            img2 = self.pagesImage[pageIdx + 1][y2:y2+h2, x2:x2+w2]
+            img2 = self.rawImages[pageIdx + 1][y2:y2+h2, x2:x2+w2]
             img = np.concatenate((img, img2))
-        filename = "writequestion_" + str(write["SN"]) + ".jpg"
-        filedir = os.path.join(save_dir, "student" + str(self.id))
-        if (not(os.path.exists(filedir))):
-            os.mkdir(filedir)
-        cv2.imwrite(os.path.join(filedir, filename), img)
-        writeRes["Items"] = [{"Note": "Only one block", "ItemID": 1, "path": os.path.join(filedir, filename)}]
+
+        # 保存图片
+        cv2.imwrite(filePath, img)
+        
+        # 保存JSON
+        writeRes["Items"] = [{"Note": "跨页" if crossPage else "", "ItemID": 1, "path": filePath}]
         return writeRes
 
-    def scoreWriteQuestions(self, save_dir):
+    def scoreWriteQuestions(self):
+        """识别主观题"""
         pagesNum = len(self.template["pages"])
-        self.result["WriteQuestion"] = []
+        self.resultJSON["WriteQuestion"] = []
         for i in range(pagesNum):
             writesNum = len(self.template["pages"][i]["WriteQuestions"])
             for j in range(writesNum):
-                self.result["WriteQuestion"].append(self.scoreSingleWriteQuestion(i, j, save_dir))
+                self.resultJSON["WriteQuestion"].append(self.scoreSingleWriteQuestion(i, j))
 
-    def score(self, model, id_dir, save_dir):
-        self.getTemplateId()
-        self.cropName(id_dir)
-        self.identifyCode(model, id_dir)
+    def score(self):
+        # 裁切姓名
+        self.cropName()
+        # 裁切手写学号
+        self.cropStudentCode()
+        # 识别手写学号
+        self.identifyCode()
+        # 识别填涂学号
         self.identifyCode2()
+        # 识别选择题
         self.scoreChoices()
-        self.scoreWriteQuestions(save_dir)
-
+        # 识别主观题
+        self.scoreWriteQuestions()
+        
+        # 返回 result JSON
+        return self.resultJSON
