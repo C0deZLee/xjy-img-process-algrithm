@@ -6,7 +6,7 @@ from .test_paper import *
 
 
 class scoreSystem:
-    def __init__(self, template, raw_img_dir, transform, model_file, data_dir, warm_start, bulk_load, raw_file_path_list):
+    def __init__(self, template, raw_img_dir, model_file, data_dir, warm_start, bulk_load, raw_file_path_list):
         """
         @Params
         template                          识别模版JSON文件 (默认为Template.json)
@@ -19,7 +19,6 @@ class scoreSystem:
         raw_file_list                     学生原始答题列表,以逗号隔开,最多四个
         """
         self.papers = []  # 答题卡列表
-        self.transform = transform # Whether to do perspective transformation
         self.template = template  # 识别模版JSON
 
         self.raw_img_dir = raw_img_dir  # 原始文件地址
@@ -55,15 +54,13 @@ class scoreSystem:
                 if (idx >= file_nums):
                     break
 
-                self.papers.append(testPaper(raw_file_list, self.raw_img_dir, self.transform,
+                self.papers.append(testPaper(raw_file_list, self.raw_img_dir,
                                              raw_file_list[0].replace('.jpg', ''), self.template))
                 print("Load test paper: " + str(len(self.papers)))
 
         else:
             raw_file_list = raw_file_path_list.split(',')
-            print(raw_file_list)
-            self.papers.append(testPaper(raw_file_list, self.raw_img_dir,
-                                         self.transform, raw_file_list[0].replace('.jpg', ''), self.template))
+            self.papers.append(testPaper(raw_file_list, self.raw_img_dir, raw_file_list[0].replace('.jpg', ''), self.template))
             print("Load test paper: " + str(len(self.papers)))
 
     def trainModel(self):
