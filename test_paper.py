@@ -1,5 +1,6 @@
 import os
 from .MNIST import *
+import json
 
 class testPaper:
     def __init__(self, rawFileFolder, rawFileNameList, template, modelPath=None, dataPath=None):
@@ -87,40 +88,52 @@ class testPaper:
         ys = y
         ye = y + h
         for i in range(h):
-            if (self.rawImages[0].item(y+i, int(xc), 1) < 252):
+            if (self.rawImages[0].item(y+i, int(xc), 1) < 220):
                 ys = y + i
                 break
         for i in range(h):
-            if (self.rawImages[0].item(y+h-i, int(xc), 1) < 252):
+            if (self.rawImages[0].item(y+h-i, int(xc), 1) < 220):
                 ye = y + h - i
                 break
         for i in range(w):
-            if (self.rawImages[0].item(int(yc), x+i, 1) < 252):
+            if (self.rawImages[0].item(int(yc), x+i, 1) < 220):
                 xs = x + i
                 break
         for i in range(w):
-            if (self.rawImages[0].item(int(yc), x+w-i, 1) < 252):
+            if (self.rawImages[0].item(int(yc), x+w-i, 1) < 220):
                 xe = x + w - i
                 break
-        num = len(self.template["pages"][0]["ID"]) - 5
+        num = 5
         w = (xe - xs) / num
         h = ye - ys
         conf = ""
         idString = ""
+        if (not(os.path.exists("hand_written_code"))):
+            os.mkdir("hand_written_code")
         for i in range(num):
             if i != 0:
                 conf += ", "
             x_tmp = xs + i * w
             y_tmp = ys
-            img = 255 - self.rawImages[0][int(y_tmp)+10:int(y_tmp+h)-10, int(x_tmp)+5:int(x_tmp+w)-5]
-            # filename = "digit" + str(i) + ".jpg"
-            # img2 = normalize(img)
-            # cv2.imwrite(os.path.join(filedir, filename), img2 * 255)
+            img = 255 - self.rawImages[0][int(y_tmp)+5:int(y_tmp+h)-5, int(x_tmp)+5:int(x_tmp+w)-5]
+            filename = "digit" + str(i) + ".jpg"
+            img = normalize(img[:, :, 0:1])
+            # kernel = cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))   
+            # img = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel, iterations=1)
+            # kernel2 = cv2.getStructuringElement(cv2.MORPH_RECT,(5,5)) 
+            # img = cv2.morphologyEx(img, cv2.MORPH_OPEN, kernel2, iterations=1)
+            # img = cv2.erode(img, kernel) 
+            cv2.imwrite(os.path.join("hand_written_code", filename), img[:, :, 0:1] * 255)
+            img = cv2.resize(img, (28, 28), interpolation = cv2.INTER_AREA)
+            # img = img[:, :, 0:1]
+            img = np.expand_dims(img, 2)
             prob, digit = self.model.predict(img)
             idString += str(digit)
             conf += str(prob)
+        self.resultJSON["studentCode"] = {}
         self.resultJSON["studentCode"]["text"] = idString
         self.resultJSON["studentCode"]["confidence"] = conf
+        print(idString, conf)
 
     def identifyCode2(self):
         """识别填涂学号"""
@@ -152,14 +165,16 @@ class testPaper:
         minAverage = 255
         for roi in choice["options"]:
             roiMean = self.getAverageIntensityValue(pageIdx, roi["x"], roi["y"], roi["width"], roi["height"], False)
+            if (roiMean <= 150):
+                if (choiceRes["Mark"] != ""):
+                    choiceRes["Mark"] += ", "
+                choiceRes["Mark"] += roi["Mark"]
             if (roiMean < minAverage):
                 minAverage = roiMean
-                if (minAverage > 240):
+                if (minAverage > 150):
                     continue
                 choiceRes["Score"] = roi["Answer"]
                 choiceRes["SingleMark"] = roi["Mark"]
-            if (roi["Answer"] != 0):
-                choiceRes["Mark"] = roi["Mark"]
         return choiceRes
 
     def scoreChoices(self):
@@ -251,3 +266,9 @@ class testPaper:
         
         # 返回 result JSON
         return self.resultJSON
+
+with open("Template2.json") as f:
+    template = json.load(f)
+
+test_paper = testPaper(".", ["E77673E9X112747_20191028_090252_0002.min.jpg", "E77673E9X112747_20191028_090252_0001.min.jpg"], template, "model.ckpt")
+test_paper.identifyCode()

@@ -25,7 +25,8 @@ def normalize(img):
     minv = np.min(img)
     maxv = np.max(img)
     img = img * (img - minv) / (maxv - minv)
-    return np.where(img > 0.3, 1, 0)
+    return np.where(img > 0.3, 1, 0).astype('float32')
+    # return img
 
 class mnistModel:
     def __init__(self, filename, datadir, warm_start):
@@ -154,11 +155,7 @@ class mnistModel:
                         best_loss = loss         
 
     def predict(self, img):
-        #print(resized.shape)
-        resized = cv2.resize(img, (28, 28), interpolation = cv2.INTER_AREA)
-        #print(resized.shape)
-        resized = resized[:, :, 0:1]
-        resized = np.expand_dims(resized, 0)
+        resized = np.expand_dims(img, 0)
         if (not(os.path.exists(self.filename + ".meta"))):
             print("not exist")
             self.train()

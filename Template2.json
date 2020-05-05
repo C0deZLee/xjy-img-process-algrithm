@@ -1,0 +1,2455 @@
+{
+    "templateId": "030120190304030324",
+    "templateName": "Modules3单元检测试卷",
+    "pages": [
+      {
+        "pageId": "A",
+        "file": "http: //img.xinjiaoyu.com/jby_files/prod/bookExercise/66E7AFFDA65A449ABA4D75D21C9A595B.jpg",
+        "Left": 26,
+        "Top": 38,
+        "Marker": {
+          "width": 90,
+          "height": 32,
+          "x": 2050,
+          "y": 3162
+        },
+        "Choice": [
+          {
+            "SN": 1,
+            "score": 1,
+            "options": [
+              {
+                "x": 84,
+                "y": 720,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 179,
+                "y": 718,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 272,
+                "y": 721,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 1
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 2,
+            "score": 1,
+            "options": [
+              {
+                "x": 584,
+                "y": 720,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 680,
+                "y": 716,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 775,
+                "y": 718,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 1
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 3,
+            "score": 1,
+            "options": [
+              {
+                "x": 1088,
+                "y": 720,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 1181,
+                "y": 718,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 1
+              },
+              {
+                "x": 1275,
+                "y": 720,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 4,
+            "score": 1,
+            "options": [
+              {
+                "x": 1589,
+                "y": 720,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 1
+              },
+              {
+                "x": 1686,
+                "y": 721,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 1778,
+                "y": 720,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 5,
+            "score": 1,
+            "options": [
+              {
+                "x": 82,
+                "y": 777,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 180,
+                "y": 777,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 1
+              },
+              {
+                "x": 270,
+                "y": 778,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 6,
+            "score": 2,
+            "options": [
+              {
+                "x": 585,
+                "y": 777,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 680,
+                "y": 778,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 1
+              },
+              {
+                "x": 777,
+                "y": 775,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 7,
+            "score": 2,
+            "options": [
+              {
+                "x": 1088,
+                "y": 777,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 1183,
+                "y": 777,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 1
+              },
+              {
+                "x": 1279,
+                "y": 777,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 8,
+            "score": 2,
+            "options": [
+              {
+                "x": 1589,
+                "y": 775,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 1684,
+                "y": 777,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 1779,
+                "y": 777,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 1
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 9,
+            "score": 2,
+            "options": [
+              {
+                "x": 84,
+                "y": 837,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 1
+              },
+              {
+                "x": 179,
+                "y": 835,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 272,
+                "y": 835,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 10,
+            "score": 2,
+            "options": [
+              {
+                "x": 584,
+                "y": 835,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 680,
+                "y": 833,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 1
+              },
+              {
+                "x": 773,
+                "y": 835,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 11,
+            "score": 2,
+            "options": [
+              {
+                "x": 1086,
+                "y": 833,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 1181,
+                "y": 835,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 1
+              },
+              {
+                "x": 1278,
+                "y": 835,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 12,
+            "score": 2,
+            "options": [
+              {
+                "x": 1589,
+                "y": 833,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 1
+              },
+              {
+                "x": 1686,
+                "y": 835,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 1779,
+                "y": 837,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 13,
+            "score": 2,
+            "options": [
+              {
+                "x": 81,
+                "y": 890,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 1
+              },
+              {
+                "x": 176,
+                "y": 890,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 270,
+                "y": 894,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 14,
+            "score": 2,
+            "options": [
+              {
+                "x": 585,
+                "y": 894,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 1
+              },
+              {
+                "x": 680,
+                "y": 892,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 775,
+                "y": 895,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 15,
+            "score": 2,
+            "options": [
+              {
+                "x": 1086,
+                "y": 890,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 1181,
+                "y": 894,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 1276,
+                "y": 890,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 1
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 16,
+            "score": 1,
+            "options": [
+              {
+                "x": 82,
+                "y": 1014,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 1
+              },
+              {
+                "x": 177,
+                "y": 1015,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 274,
+                "y": 1017,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              },
+              {
+                "x": 365,
+                "y": 1017,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 17,
+            "score": 1,
+            "options": [
+              {
+                "x": 590,
+                "y": 1014,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 688,
+                "y": 1017,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 783,
+                "y": 1017,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 1
+              },
+              {
+                "x": 876,
+                "y": 1017,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 18,
+            "score": 1,
+            "options": [
+              {
+                "x": 1101,
+                "y": 1014,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 1197,
+                "y": 1017,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 1294,
+                "y": 1017,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 1
+              },
+              {
+                "x": 1387,
+                "y": 1017,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 19,
+            "score": 1,
+            "options": [
+              {
+                "x": 1612,
+                "y": 1014,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 1705,
+                "y": 1014,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 1
+              },
+              {
+                "x": 1803,
+                "y": 1015,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              },
+              {
+                "x": 1896,
+                "y": 1014,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 20,
+            "score": 1,
+            "options": [
+              {
+                "x": 84,
+                "y": 1072,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 177,
+                "y": 1074,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 1
+              },
+              {
+                "x": 272,
+                "y": 1072,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              },
+              {
+                "x": 365,
+                "y": 1074,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 21,
+            "score": 1,
+            "options": [
+              {
+                "x": 590,
+                "y": 1072,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 690,
+                "y": 1072,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 781,
+                "y": 1072,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 1
+              },
+              {
+                "x": 875,
+                "y": 1075,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 22,
+            "score": 1,
+            "options": [
+              {
+                "x": 1101,
+                "y": 1071,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 1197,
+                "y": 1072,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 1289,
+                "y": 1072,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              },
+              {
+                "x": 1387,
+                "y": 1074,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 1
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 23,
+            "score": 1,
+            "options": [
+              {
+                "x": 1610,
+                "y": 1071,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 1
+              },
+              {
+                "x": 1705,
+                "y": 1072,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 1801,
+                "y": 1071,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              },
+              {
+                "x": 1895,
+                "y": 1072,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 24,
+            "score": 1,
+            "options": [
+              {
+                "x": 85,
+                "y": 1131,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 179,
+                "y": 1131,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 275,
+                "y": 1131,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 1
+              },
+              {
+                "x": 365,
+                "y": 1129,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 25,
+            "score": 1,
+            "options": [
+              {
+                "x": 593,
+                "y": 1129,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 685,
+                "y": 1131,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 781,
+                "y": 1129,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              },
+              {
+                "x": 873,
+                "y": 1131,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 1
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 26,
+            "score": 1,
+            "options": [
+              {
+                "x": 82,
+                "y": 1253,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 1
+              },
+              {
+                "x": 176,
+                "y": 1253,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 272,
+                "y": 1253,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              },
+              {
+                "x": 367,
+                "y": 1251,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 27,
+            "score": 1,
+            "options": [
+              {
+                "x": 588,
+                "y": 1251,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 686,
+                "y": 1254,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 784,
+                "y": 1253,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 1
+              },
+              {
+                "x": 876,
+                "y": 1256,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 28,
+            "score": 1,
+            "options": [
+              {
+                "x": 1101,
+                "y": 1249,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 1197,
+                "y": 1249,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 1
+              },
+              {
+                "x": 1290,
+                "y": 1254,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              },
+              {
+                "x": 1385,
+                "y": 1254,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 29,
+            "score": 1,
+            "options": [
+              {
+                "x": 1612,
+                "y": 1249,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 1706,
+                "y": 1248,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 1801,
+                "y": 1254,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 1
+              },
+              {
+                "x": 1898,
+                "y": 1253,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 30,
+            "score": 1,
+            "options": [
+              {
+                "x": 81,
+                "y": 1313,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 177,
+                "y": 1309,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 1
+              },
+              {
+                "x": 277,
+                "y": 1311,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              },
+              {
+                "x": 364,
+                "y": 1309,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 31,
+            "score": 1,
+            "options": [
+              {
+                "x": 590,
+                "y": 1308,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 686,
+                "y": 1309,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 783,
+                "y": 1308,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              },
+              {
+                "x": 875,
+                "y": 1309,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 1
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 32,
+            "score": 1,
+            "options": [
+              {
+                "x": 1102,
+                "y": 1309,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 1196,
+                "y": 1311,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 1292,
+                "y": 1311,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 1
+              },
+              {
+                "x": 1384,
+                "y": 1309,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 33,
+            "score": 1,
+            "options": [
+              {
+                "x": 1612,
+                "y": 1311,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 1705,
+                "y": 1311,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 1801,
+                "y": 1309,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 1
+              },
+              {
+                "x": 1898,
+                "y": 1309,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 34,
+            "score": 1,
+            "options": [
+              {
+                "x": 82,
+                "y": 1370,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 1
+              },
+              {
+                "x": 176,
+                "y": 1366,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 272,
+                "y": 1368,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              },
+              {
+                "x": 367,
+                "y": 1368,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 35,
+            "score": 1,
+            "options": [
+              {
+                "x": 593,
+                "y": 1370,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 688,
+                "y": 1368,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 781,
+                "y": 1368,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 1
+              },
+              {
+                "x": 876,
+                "y": 1370,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 36,
+            "score": 2,
+            "options": [
+              {
+                "x": 81,
+                "y": 1488,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 1
+              },
+              {
+                "x": 179,
+                "y": 1493,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 272,
+                "y": 1490,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              },
+              {
+                "x": 367,
+                "y": 1490,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 37,
+            "score": 2,
+            "options": [
+              {
+                "x": 590,
+                "y": 1487,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 683,
+                "y": 1491,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 1
+              },
+              {
+                "x": 784,
+                "y": 1491,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              },
+              {
+                "x": 876,
+                "y": 1490,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 38,
+            "score": 2,
+            "options": [
+              {
+                "x": 1099,
+                "y": 1490,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 1
+              },
+              {
+                "x": 1197,
+                "y": 1490,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 1289,
+                "y": 1488,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              },
+              {
+                "x": 1385,
+                "y": 1491,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 39,
+            "score": 2,
+            "options": [
+              {
+                "x": 1610,
+                "y": 1490,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 1
+              },
+              {
+                "x": 1703,
+                "y": 1488,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 1798,
+                "y": 1491,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              },
+              {
+                "x": 1893,
+                "y": 1490,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 40,
+            "score": 2,
+            "options": [
+              {
+                "x": 81,
+                "y": 1548,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 177,
+                "y": 1550,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 270,
+                "y": 1547,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 1
+              },
+              {
+                "x": 367,
+                "y": 1547,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 41,
+            "score": 2,
+            "options": [
+              {
+                "x": 590,
+                "y": 1548,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 685,
+                "y": 1550,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 1
+              },
+              {
+                "x": 784,
+                "y": 1547,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              },
+              {
+                "x": 879,
+                "y": 1548,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 42,
+            "score": 2,
+            "options": [
+              {
+                "x": 1099,
+                "y": 1547,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 1196,
+                "y": 1550,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 1292,
+                "y": 1548,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 1
+              },
+              {
+                "x": 1385,
+                "y": 1547,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 43,
+            "score": 2,
+            "options": [
+              {
+                "x": 1612,
+                "y": 1547,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 1706,
+                "y": 1548,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 1801,
+                "y": 1547,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 1
+              },
+              {
+                "x": 1899,
+                "y": 1550,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 44,
+            "score": 2,
+            "options": [
+              {
+                "x": 79,
+                "y": 1605,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 180,
+                "y": 1605,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 1
+              },
+              {
+                "x": 270,
+                "y": 1604,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              },
+              {
+                "x": 368,
+                "y": 1605,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 45,
+            "score": 2,
+            "options": [
+              {
+                "x": 593,
+                "y": 1607,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 688,
+                "y": 1605,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 783,
+                "y": 1607,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 1
+              },
+              {
+                "x": 879,
+                "y": 1605,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 46,
+            "score": 2,
+            "options": [
+              {
+                "x": 82,
+                "y": 2243,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 628,
+                "y": 2241,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 1
+              },
+              {
+                "x": 1151,
+                "y": 2241,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              },
+              {
+                "x": 1676,
+                "y": 2241,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 47,
+            "score": 2,
+            "options": [
+              {
+                "x": 84,
+                "y": 2356,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 1153,
+                "y": 2356,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 82,
+                "y": 2413,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              },
+              {
+                "x": 1151,
+                "y": 2412,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 1
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 48,
+            "score": 2,
+            "options": [
+              {
+                "x": 81,
+                "y": 2532,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 84,
+                "y": 2587,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 82,
+                "y": 2649,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 1
+              },
+              {
+                "x": 82,
+                "y": 2704,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 0
+              }
+            ],
+            "page": "A"
+          },
+          {
+            "SN": 49,
+            "score": 2,
+            "options": [
+              {
+                "x": 82,
+                "y": 2820,
+                "width": 54,
+                "height": 28,
+                "Mark": "A",
+                "Answer": 0
+              },
+              {
+                "x": 625,
+                "y": 2818,
+                "width": 54,
+                "height": 28,
+                "Mark": "B",
+                "Answer": 0
+              },
+              {
+                "x": 1147,
+                "y": 2818,
+                "width": 54,
+                "height": 28,
+                "Mark": "C",
+                "Answer": 0
+              },
+              {
+                "x": 1667,
+                "y": 2818,
+                "width": 54,
+                "height": 28,
+                "Mark": "D",
+                "Answer": 1
+              }
+            ],
+            "page": "A"
+          }
+        ],
+        "MultipleChoice": [
+          
+        ],
+        "WriteQuestions": [
+          {
+            "SN": 50,
+            "hasScore": 1,
+            "page": "A",
+            "scores": [
+              {
+                "x": 879,
+                "y": 2870,
+                "width": 88.5,
+                "height": 46,
+                "Score": 0
+              },
+              {
+                "x": 967.5,
+                "y": 2870,
+                "width": 88.5,
+                "height": 46,
+                "Score": 2
+              }
+            ],
+            "options": [
+              {
+                "x": 11,
+                "y": 2866,
+                "width": 2111,
+                "height": 221,
+                "Mark": "第一部分",
+                "ID": 1,
+                "JoinUp": 1
+              }
+            ]
+          }
+        ],
+        "Name": {
+          "x": 180,
+          "y": 145,
+          "width": 300,
+          "height": 120
+        },
+        "ID": {
+          "x": 667,
+          "y": 117,
+          "width": 551,
+          "height": 170
+        }
+      },
+      {
+        "pageId": "B",
+        "file": "http: //img.xinjiaoyu.com/jby_files/prod/bookExercise/9D39ED7614FE4B8BBAC9FA7EC5358B21.jpg",
+        "Left": 26,
+        "Top": 38,
+        "Marker": {
+          "width": 90,
+          "height": 32,
+          "x": 2050,
+          "y": 3162
+        },
+        "Choice": [
+          
+        ],
+        "MultipleChoice": [
+          
+        ],
+        "WriteQuestions": [
+          {
+            "SN": 51,
+            "hasScore": 1,
+            "page": "B",
+            "scores": [
+              {
+                "x": 1069,
+                "y": 351,
+                "width": 88.5,
+                "height": 43,
+                "Score": 0
+              },
+              {
+                "x": 1157.5,
+                "y": 351,
+                "width": 88.5,
+                "height": 43,
+                "Score": 1
+              }
+            ],
+            "options": [
+              {
+                "x": 9,
+                "y": 321,
+                "width": 1291,
+                "height": 97,
+                "Mark": "第一部分",
+                "ID": 1,
+                "JoinUp": 1
+              }
+            ]
+          },
+          {
+            "SN": 52,
+            "hasScore": 1,
+            "page": "B",
+            "scores": [
+              {
+                "x": 1069,
+                "y": 436,
+                "width": 88.5,
+                "height": 45,
+                "Score": 0
+              },
+              {
+                "x": 1157.5,
+                "y": 436,
+                "width": 88.5,
+                "height": 45,
+                "Score": 1
+              }
+            ],
+            "options": [
+              {
+                "x": 9,
+                "y": 418,
+                "width": 1291,
+                "height": 88,
+                "Mark": "第一部分",
+                "ID": 1,
+                "JoinUp": 1
+              }
+            ]
+          },
+          {
+            "SN": 53,
+            "hasScore": 1,
+            "page": "B",
+            "scores": [
+              {
+                "x": 1066,
+                "y": 520,
+                "width": 89.5,
+                "height": 45,
+                "Score": 0
+              },
+              {
+                "x": 1155.5,
+                "y": 520,
+                "width": 89.5,
+                "height": 45,
+                "Score": 1
+              }
+            ],
+            "options": [
+              {
+                "x": 8,
+                "y": 503,
+                "width": 1290,
+                "height": 90,
+                "Mark": "第一部分",
+                "ID": 1,
+                "JoinUp": 1
+              }
+            ]
+          },
+          {
+            "SN": 54,
+            "hasScore": 1,
+            "page": "B",
+            "scores": [
+              {
+                "x": 1069,
+                "y": 691,
+                "width": 88.5,
+                "height": 44,
+                "Score": 0
+              },
+              {
+                "x": 1157.5,
+                "y": 691,
+                "width": 88.5,
+                "height": 44,
+                "Score": 1
+              }
+            ],
+            "options": [
+              {
+                "x": 8,
+                "y": 591,
+                "width": 1290,
+                "height": 171,
+                "Mark": "第一部分",
+                "ID": 1,
+                "JoinUp": 1
+              }
+            ]
+          },
+          {
+            "SN": 55,
+            "hasScore": 1,
+            "page": "B",
+            "scores": [
+              {
+                "x": 1071,
+                "y": 775,
+                "width": 87,
+                "height": 44,
+                "Score": 0
+              },
+              {
+                "x": 1158,
+                "y": 775,
+                "width": 87,
+                "height": 44,
+                "Score": 1
+              }
+            ],
+            "options": [
+              {
+                "x": 6,
+                "y": 759,
+                "width": 1294,
+                "height": 163,
+                "Mark": "第一部分",
+                "ID": 1,
+                "JoinUp": 1
+              }
+            ]
+          },
+          {
+            "SN": 56,
+            "hasScore": 1,
+            "page": "B",
+            "scores": [
+              {
+                "x": 387,
+                "y": 1441,
+                "width": 86.5,
+                "height": 44,
+                "Score": 0
+              },
+              {
+                "x": 473.5,
+                "y": 1441,
+                "width": 86.5,
+                "height": 44,
+                "Score": 1
+              }
+            ],
+            "options": [
+              {
+                "x": 8,
+                "y": 1415,
+                "width": 583,
+                "height": 98,
+                "Mark": "第一部分",
+                "ID": 1,
+                "JoinUp": 1
+              }
+            ]
+          },
+          {
+            "SN": 57,
+            "hasScore": 1,
+            "page": "B",
+            "scores": [
+              {
+                "x": 1063,
+                "y": 1441,
+                "width": 87.5,
+                "height": 44,
+                "Score": 0
+              },
+              {
+                "x": 1150.5,
+                "y": 1441,
+                "width": 87.5,
+                "height": 44,
+                "Score": 1
+              }
+            ],
+            "options": [
+              {
+                "x": 678,
+                "y": 1419,
+                "width": 581,
+                "height": 88,
+                "Mark": "第一部分",
+                "ID": 1,
+                "JoinUp": 1
+              }
+            ]
+          },
+          {
+            "SN": 58,
+            "hasScore": 1,
+            "page": "B",
+            "scores": [
+              {
+                "x": 1740,
+                "y": 1439,
+                "width": 87.5,
+                "height": 46,
+                "Score": 0
+              },
+              {
+                "x": 1827.5,
+                "y": 1439,
+                "width": 87.5,
+                "height": 46,
+                "Score": 1
+              }
+            ],
+            "options": [
+              {
+                "x": 1355,
+                "y": 1408,
+                "width": 623,
+                "height": 98,
+                "Mark": "第一部分",
+                "ID": 1,
+                "JoinUp": 1
+              }
+            ]
+          },
+          {
+            "SN": 59,
+            "hasScore": 1,
+            "page": "B",
+            "scores": [
+              {
+                "x": 386,
+                "y": 1532,
+                "width": 87.5,
+                "height": 43,
+                "Score": 0
+              },
+              {
+                "x": 473.5,
+                "y": 1532,
+                "width": 87.5,
+                "height": 43,
+                "Score": 1
+              }
+            ],
+            "options": [
+              {
+                "x": 8,
+                "y": 1507,
+                "width": 587,
+                "height": 93,
+                "Mark": "第一部分",
+                "ID": 1,
+                "JoinUp": 1
+              }
+            ]
+          },
+          {
+            "SN": 60,
+            "hasScore": 1,
+            "page": "B",
+            "scores": [
+              {
+                "x": 1064,
+                "y": 1529,
+                "width": 87,
+                "height": 48,
+                "Score": 0
+              },
+              {
+                "x": 1151,
+                "y": 1529,
+                "width": 87,
+                "height": 48,
+                "Score": 1
+              }
+            ],
+            "options": [
+              {
+                "x": 675,
+                "y": 1502,
+                "width": 584,
+                "height": 94,
+                "Mark": "第一部分",
+                "ID": 1,
+                "JoinUp": 1
+              }
+            ]
+          },
+          {
+            "SN": 61,
+            "hasScore": 1,
+            "page": "B",
+            "scores": [
+              {
+                "x": 1738,
+                "y": 1531,
+                "width": 89.5,
+                "height": 44,
+                "Score": 0
+              },
+              {
+                "x": 1827.5,
+                "y": 1531,
+                "width": 89.5,
+                "height": 44,
+                "Score": 1
+              }
+            ],
+            "options": [
+              {
+                "x": 1354,
+                "y": 1499,
+                "width": 623,
+                "height": 101,
+                "Mark": "第一部分",
+                "ID": 1,
+                "JoinUp": 1
+              }
+            ]
+          },
+          {
+            "SN": 62,
+            "hasScore": 1,
+            "page": "B",
+            "scores": [
+              {
+                "x": 387,
+                "y": 1621,
+                "width": 88,
+                "height": 46,
+                "Score": 0
+              },
+              {
+                "x": 475,
+                "y": 1621,
+                "width": 88,
+                "height": 46,
+                "Score": 1
+              }
+            ],
+            "options": [
+              {
+                "x": 9,
+                "y": 1599,
+                "width": 589,
+                "height": 95,
+                "Mark": "第一部分",
+                "ID": 1,
+                "JoinUp": 1
+              }
+            ]
+          },
+          {
+            "SN": 63,
+            "hasScore": 1,
+            "page": "B",
+            "scores": [
+              {
+                "x": 1063,
+                "y": 1621,
+                "width": 88.5,
+                "height": 46,
+                "Score": 0
+              },
+              {
+                "x": 1151.5,
+                "y": 1621,
+                "width": 88.5,
+                "height": 46,
+                "Score": 1
+              }
+            ],
+            "options": [
+              {
+                "x": 672,
+                "y": 1594,
+                "width": 587,
+                "height": 116,
+                "Mark": "第一部分",
+                "ID": 1,
+                "JoinUp": 1
+              }
+            ]
+          },
+          {
+            "SN": 64,
+            "hasScore": 1,
+            "page": "B",
+            "scores": [
+              {
+                "x": 1738,
+                "y": 1621,
+                "width": 88.5,
+                "height": 46,
+                "Score": 0
+              },
+              {
+                "x": 1826.5,
+                "y": 1621,
+                "width": 88.5,
+                "height": 46,
+                "Score": 1
+              }
+            ],
+            "options": [
+              {
+                "x": 1355,
+                "y": 1597,
+                "width": 622,
+                "height": 106,
+                "Mark": "第一部分",
+                "ID": 1,
+                "JoinUp": 1
+              }
+            ]
+          },
+          {
+            "SN": 65,
+            "hasScore": 1,
+            "page": "B",
+            "scores": [
+              {
+                "x": 384,
+                "y": 1713,
+                "width": 88.5,
+                "height": 42,
+                "Score": 0
+              },
+              {
+                "x": 472.5,
+                "y": 1713,
+                "width": 88.5,
+                "height": 42,
+                "Score": 1
+              }
+            ],
+            "options": [
+              {
+                "x": 8,
+                "y": 1691,
+                "width": 593,
+                "height": 98,
+                "Mark": "第一部分",
+                "ID": 1,
+                "JoinUp": 1
+              }
+            ]
+          },
+          {
+            "SN": 66,
+            "hasScore": 1,
+            "page": "B",
+            "scores": [
+              {
+                "x": 478,
+                "y": 1811,
+                "width": 87.27272727272727,
+                "height": 41,
+                "Score": 0
+              },
+              {
+                "x": 565.2727272727273,
+                "y": 1811,
+                "width": 87.27272727272727,
+                "height": 41,
+                "Score": 1
+              },
+              {
+                "x": 652.5454545454545,
+                "y": 1811,
+                "width": 87.27272727272727,
+                "height": 41,
+                "Score": 2
+              },
+              {
+                "x": 739.8181818181818,
+                "y": 1811,
+                "width": 87.27272727272727,
+                "height": 41,
+                "Score": 3
+              },
+              {
+                "x": 827.090909090909,
+                "y": 1811,
+                "width": 87.27272727272727,
+                "height": 41,
+                "Score": 4
+              },
+              {
+                "x": 914.3636363636363,
+                "y": 1811,
+                "width": 87.27272727272727,
+                "height": 41,
+                "Score": 5
+              },
+              {
+                "x": 1001.6363636363636,
+                "y": 1811,
+                "width": 87.27272727272727,
+                "height": 41,
+                "Score": 6
+              },
+              {
+                "x": 1088.909090909091,
+                "y": 1811,
+                "width": 87.27272727272727,
+                "height": 41,
+                "Score": 7
+              },
+              {
+                "x": 1176.181818181818,
+                "y": 1811,
+                "width": 87.27272727272727,
+                "height": 41,
+                "Score": 8
+              },
+              {
+                "x": 1263.4545454545455,
+                "y": 1811,
+                "width": 87.27272727272727,
+                "height": 41,
+                "Score": 9
+              },
+              {
+                "x": 1350.7272727272725,
+                "y": 1811,
+                "width": 87.27272727272727,
+                "height": 41,
+                "Score": 10
+              }
+            ],
+            "options": [
+              {
+                "x": 8,
+                "y": 1787,
+                "width": 2122,
+                "height": 1227,
+                "Mark": "第一部分",
+                "ID": 1,
+                "JoinUp": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }

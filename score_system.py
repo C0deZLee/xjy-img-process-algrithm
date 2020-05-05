@@ -96,10 +96,6 @@ class scoreSystem:
 
             for idx, paper in enumerate(self.papers):
 
-                # 如果不是裁剪过的图片, 则裁剪图片
-                if not self.cropped:
-                    cropped_list = paper.crop(cropped_sheets_dir)
-
                 paper.score(self.model, hand_written_student_code_dir, cropped_write_questions_dir)
 
                 # 创建文件路径
@@ -115,8 +111,6 @@ class scoreSystem:
         else:
             paper = self.papers[0]
             idx = paper.id
-            # 矫正图片
-            cropped_list = paper.crop(cropped_sheets_dir)
 
             paper.score(self.model, hand_written_student_code_dir, cropped_write_questions_dir)
 
