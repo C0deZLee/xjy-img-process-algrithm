@@ -130,7 +130,6 @@ class testPaper:
             prob, digit = self.model.predict(img)
             idString += str(digit)
             conf += str(prob)
-        self.resultJSON["studentCode"] = {}
         self.resultJSON["studentCode"]["text"] = idString
         self.resultJSON["studentCode"]["confidence"] = conf
         print(idString, conf)
@@ -267,8 +266,8 @@ class testPaper:
         # 返回 result JSON
         return self.resultJSON
 
-with open("Template2.json") as f:
-    template = json.load(f)
+# with open("Template2.json") as f:
+#     template = json.load(f)
 
-test_paper = testPaper(".", ["E77673E9X112747_20191028_090252_0002.min.jpg", "E77673E9X112747_20191028_090252_0001.min.jpg"], template, "model.ckpt")
-test_paper.identifyCode()
+# test_paper = testPaper(".", ["E77673E9X112747_20191028_090252_0002.min.jpg", "E77673E9X112747_20191028_090252_0001.min.jpg"], template, "model.ckpt")
+# test_paper.identifyCode()
